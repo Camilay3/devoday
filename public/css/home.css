@@ -69,6 +69,7 @@ p {
 
 .modificadores i {
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .data, .sugestao h2, .conquistas h2 {

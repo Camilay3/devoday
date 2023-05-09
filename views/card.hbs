@@ -166,14 +166,14 @@
 
             <div class="boxShadow res">
                 <h1>{{tit}}</h1>
-                <p>{{message}}</p>
+                <p>{{message}}<a href="{{link}}">Bíblia Ave Maria</a></p>
             </div>
         </div>
 
         <div class="rigth boxShadow">
             <form action="/criar/devocional" method="post">
             <input type="text" name="titulo2" value="{{titInp}}" style="display: none;">
-                <h1>Devo xx.xx.xxxx</h1>
+                <h1>Devo {{datadevo}}</h1>
                 <div class="label">
                     <label for="q1">O que a passagem quer dizer?</label>
                     {{#if q1}}

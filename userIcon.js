@@ -77,7 +77,8 @@ async function userIcon(vari, page, res) {
                     txts_old: antigo.livros,
                     selected: 1,
                     txts_new: novo.livros,
-                    message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso",
+                    message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso. Caso queira adquirir o físico: ",
+                    link: "https://avemaria.com.br/",
                     tit: "Leitura"
                 })
             } else if (vari.ima == x) {
@@ -86,7 +87,8 @@ async function userIcon(vari, page, res) {
                     txts_old: antigo.livros,
                     selected: 1,
                     txts_new: novo.livros,
-                    message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso",
+                    message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso. Caso queira adquirir o físico: ",
+                    link: "https://avemaria.com.br/",
                     tit: "Leitura"
                 })
             }
