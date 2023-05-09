@@ -42,6 +42,8 @@ const getPhrase = () => {
     if (versF == versI) {
       if ((versF + 5) < antigo.livros[liv].leitura[cap]["versi"]) {
         versF += 5
+      } else {
+        versF = antigo.livros[liv].leitura[cap]["versi"];
       }
     }
     if (cap > antigo.livros[liv].capitulos) {
@@ -77,6 +79,8 @@ const getPhrase = () => {
     if (versF == versI) {
       if ((versF + 5) < novo.livros[liv].leitura[cap]["versi"]) {
         versF += 5
+      } else {
+        versF = novo.livros[liv].leitura[cap]["versi"];
       }
     }
     let titulo = versF == versI ? `${novo.livros[liv].abr}_${cap}:${versI}` : `${novo.livros[liv].abr}_${cap}:${versI}-${versF}`;
