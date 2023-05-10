@@ -81,6 +81,11 @@ router.get('/sugerido', async (req, res) => {
         let sugv = sug2c[1].split('-');
         let sugvf = sugv.length > 1? sugv[1] : sugv[0];
 
+        let dataCode = new Date();
+        let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
+        let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
+        let data2 = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
+
         let imagens = ['cordeiro', 'coelho']
 
         let cardsUser = await prisma.Cards.findMany({select: {
@@ -106,6 +111,7 @@ router.get('/sugerido', async (req, res) => {
                     return res.render('card', {
                         txts_old: antigo.livros,
                         txts_new: novo.livros,
+                        datadevo: cardsUser[0].data,
                         message: sugestaoTex,
                         tit: sugestaoTit,
                         titInp: sug1,
@@ -114,10 +120,12 @@ router.get('/sugerido', async (req, res) => {
                     })
                     
                 } else if (usuarioCookie.ima == x) {
+                    console.log(cardsUser[0].data)
                     return res.render('card', {
                         imagem: imagens[x-1],
                         txts_old: antigo.livros,
                         txts_new: novo.livros,
+                        datadevo: cardsUser[0].data,
                         message: sugestaoTex,
                         tit: sugestaoTit,
                         titInp: sug1,
@@ -134,6 +142,7 @@ router.get('/sugerido', async (req, res) => {
                         txts_old: antigo.livros,
                         selected: 1,
                         txts_new: novo.livros,
+                        datadevo: data2,
                         message: sugestaoTex,
                         tit: sugestaoTit,
                         titInp: sug1
@@ -144,6 +153,7 @@ router.get('/sugerido', async (req, res) => {
                         txts_old: antigo.livros,
                         selected: 1,
                         txts_new: novo.livros,
+                        datadevo: data2,
                         message: sugestaoTex,
                         tit: sugestaoTit,
                         titInp: sug1

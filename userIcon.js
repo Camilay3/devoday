@@ -71,12 +71,19 @@ async function userIcon(vari, page, res) {
         }
 
     } else if (page == 'card' || page == 'tutorial/tutoB' || page == 'tutorial/tutoC') {
+
+        let dataCode = new Date();
+        let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
+        let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
+        let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
+
         for (let x = 1; x <= imagens.length; x++) {
             if (vari.ima == 0) {
                 return res.render(page, {
                     txts_old: antigo.livros,
                     selected: 1,
                     txts_new: novo.livros,
+                    datadevo: data,
                     message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso. Caso queira adquirir o físico: ",
                     link: "https://avemaria.com.br/",
                     tit: "Leitura"
@@ -87,6 +94,7 @@ async function userIcon(vari, page, res) {
                     txts_old: antigo.livros,
                     selected: 1,
                     txts_new: novo.livros,
+                    datadevo: data,
                     message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso. Caso queira adquirir o físico: ",
                     link: "https://avemaria.com.br/",
                     tit: "Leitura"

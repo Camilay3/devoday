@@ -95,7 +95,6 @@ exports.escolha = async (req, res) => {
     var usuarioCookie = verify(accessToken, process.env.TOKEN);
     const tutoToken = req.cookies["tuto-token"];
 
-
     let usuarios = await prisma.Users.findMany({select: {
         id: true
         }, where: {
@@ -104,83 +103,119 @@ exports.escolha = async (req, res) => {
     })
 
     let mensi;
+    let dataCode = new Date();
+    let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
+    let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
+    let data2 = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
-
-    for (let x = 1; x <= imagens.length; x++) {
-        if (tutoToken) {
-            if (usuarioCookie.ima == 0) {
-                return res.render('tutorial/tutoC', {
-                    txts_old: antigo.livros,
-                    txts_new: novo.livros,
-                    message: mensagem,
-                    tit: titulo
-                })
-            } else {
-                return res.render('tutorial/tutoC', {
-                    imagem: imagens[x-1],
-                    txts_old: antigo.livros,
-                    txts_new: novo.livros,
-                    message: mensagem,
-                    tit: titulo
-                })
+    if (cardsUser.length > 0) {
+        for (let a = 0; a < antigo.livros.length; a++) {
+            if (antigo.livros[a].abr == cardsUser[0].livro) {
+                mensi = fun.agrupar(antigo.livros[a], cardsUser[0].capitulo, cardsUser[0].versInicial, cardsUser[0].versFinal);
             }
-            
+        }
+        for (let a = 0; a < novo.livros.length; a++) {
+            if (novo.livros[a].abr == cardsUser[0].livro) {
+                mensi = fun.agrupar(novo.livros[a], cardsUser[0].capitulo, cardsUser[0].versInicial, cardsUser[0].versFinal);
+            }
+        }
+
+        if (tutoToken) {
+            for (let x = 1; x <= imagens.length; x++) {
+                if (usuarioCookie.ima == 0) {
+                    return res.render('tutorial/tutoC', {
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: cardsUser[0].data,
+                        message: mensagem,
+                        tit: titulo,
+                        q1: cardsUser[0].q1,
+                        q2: cardsUser[0].q2
+                    });
+                } else if (usuarioCookie.ima == x) {
+                    return res.render('card', {
+                        imagem: imagens[x-1],
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: cardsUser[0].data,
+                        message: mensi,
+                        tit: titulo,
+                        q1: cardsUser[0].q1,
+                        q2: cardsUser[0].q2
+                    })
+                }
+            }
+
         } else {
-            if (cardsUser.length > 0) {
-                for (let a = 0; a < antigo.livros.length; a++) {
-                    if (antigo.livros[a].abr == cardsUser[0].livro) {
-                        mensi = fun.agrupar(antigo.livros[a], cardsUser[0].capitulo, cardsUser[0].versInicial, cardsUser[0].versFinal);
-                    }
+            for (let x = 1; x <= imagens.length; x++) {
+                if (usuarioCookie.ima == 0) {
+                    return res.render('card', {
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: cardsUser[0].data,
+                        message: mensi,
+                        tit: titulo,
+                        q1: cardsUser[0].q1,
+                        q2: cardsUser[0].q2
+                    });
+                    
+                } else if (usuarioCookie.ima == x) {
+                    return res.render('card', {
+                        imagem: imagens[x-1],
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: cardsUser[0].data,
+                        message: mensi,
+                        tit: titulo,
+                        q1: cardsUser[0].q1,
+                        q2: cardsUser[0].q2
+                    });
                 }
-                for (let a = 0; a < novo.livros.length; a++) {
-                    if (novo.livros[a].abr == cardsUser[0].livro) {
-                        mensi = fun.agrupar(novo.livros[a], cardsUser[0].capitulo, cardsUser[0].versInicial, cardsUser[0].versFinal);
-                    }
-                }
+            }
+        }
 
-                for (let x = 1; x <= imagens.length; x++) {
-                    if (usuarioCookie.ima == 0) {
-                        return res.render('card', {
-                            txts_old: antigo.livros,
-                            txts_new: novo.livros,
-                            message: mensi,
-                            tit: titulo,
-                            q1: cardsUser[0].q1,
-                            q2: cardsUser[0].q2
-                        })
-                        
-                    } else if (usuarioCookie.ima == x) {
-                        return res.render('card', {
-                            imagem: imagens[x-1],
-                            txts_old: antigo.livros,
-                            txts_new: novo.livros,
-                            message: mensi,
-                            tit: titulo,
-                            q1: cardsUser[0].q1,
-                            q2: cardsUser[0].q2
-                        })
-                    }
+    } else {
+        if (tutoToken) {
+            for (let x = 1; x <= imagens.length; x++) {
+                if (usuarioCookie.ima == 0) {
+                    return res.render('tutorial/tutoC', {
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: data2,
+                        message: mensagem,
+                        tit: titulo
+                    });
+                } else {
+                    return res.render('tutorial/tutoC', {
+                        imagem: imagens[x-1],
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: data2,
+                        message: mensi,
+                        tit: titulo
+                    });
                 }
-
-            } else {
-                for (let x = 1; x <= imagens.length; x++) {
-                    if (usuarioCookie.ima == 0) {
-                        return res.render('card', {
-                            txts_old: antigo.livros,
-                            txts_new: novo.livros,
-                            message: mensagem,
-                            tit: titulo
-                        })
-                        
-                    } else if (usuarioCookie.ima == x) {
-                        return res.render('card', {
-                            imagem: imagens[x-1],
-                            txts_old: antigo.livros,
-                            txts_new: novo.livros,
-                            message: mensagem,
-                            tit: titulo
-                        })
-                    }
+            }
+        } else {
+            for (let x = 1; x <= imagens.length; x++) {
+                if (usuarioCookie.ima == 0) {
+                    return res.render('card', {
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: data2,
+                        message: mensagem,
+                        tit: titulo
+                    })
+                    
+                } else if (usuarioCookie.ima == x) {
+                    return res.render('card', {
+                        imagem: imagens[x-1],
+                        txts_old: antigo.livros,
+                        txts_new: novo.livros,
+                        datadevo: data2,
+                        message: mensagem,
+                        tit: titulo
+                    })
                 }
             }
         }
@@ -356,6 +391,7 @@ exports.modificar = async (req, res) => {
                 return res.render('card', {
                     txts_old: antigo.livros,
                     txts_new: novo.livros,
+                    datadevo: cardsUser[0].data,
                     message: mens,
                     tit: livr,
                     titInp: li,
@@ -368,6 +404,7 @@ exports.modificar = async (req, res) => {
                     imagem: imagens[x-1],
                     txts_old: antigo.livros,
                     txts_new: novo.livros,
+                    datadevo: cardsUser[0].data,
                     message: mens,
                     tit: livr,
                     titInp: li,
