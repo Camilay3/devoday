@@ -1,6 +1,6 @@
 let imagens = ['cordeiro', 'coelho'];
-const antigo = require('../bibliaAPI/textosAntigo');
-const novo = require('../bibliaAPI/textosNovo');
+const antigo = require('./bibliaAPI/textosAntigo');
+const novo = require('./bibliaAPI/textosNovo');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
