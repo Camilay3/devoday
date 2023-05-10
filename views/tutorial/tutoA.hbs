@@ -12,6 +12,8 @@
     <title>Devo day</title>
 </head>
 <body>
+    {{> preloader }}
+
     <div class="cont">
         <a href="/" class="sair">Sair do tutorial</a>
         <img src="/imgs/felizFN.png" alt="guia">
@@ -26,30 +28,75 @@
     {{> header }}
     <section>
         <div class="cards">
-            {{#each cards as | card |}}
-                <div class="card">
-                    {{#ifEquals card/versInicial card/versFinal}}
-                        <h1>{{card/livro}} {{card/capitulo}}:{{card/versInicial}}</h1>
-                    {{else}}
-                        <h1>{{card/livro}} {{card/capitulo}}:{{card/versInicial}}-{{card/versFinal}}</h1>
-                    {{/ifEquals}}
+            <form action="/criar/modificar" method="post">
+                {{#each cards as | card |}}
+                    {{#ifEquals card/fav 0}}
+                        <div class="bottom">
+                            <div class="card">
+                                {{#ifEquals card/versInicial card/versFinal}}
+                                    <h1>{{card/livro}} {{card/capitulo}}:{{card/versInicial}}</h1>
+                                {{else}}
+                                    <h1>{{card/livro}} {{card/capitulo}}:{{card/versInicial}}-{{card/versFinal}}</h1>
+                                {{/ifEquals}}
 
-                    {{#ifEquals card/q1 ""}}
-                        {{#ifEquals card/q2 ""}}
-                            <p class="alert">Nenhum texto foi escrito</p>
-                        {{else}}
-                            <p>"{{card/q2}}"</p>
-                        {{/ifEquals}}
-                    {{else}}
-                        <p>"{{card/q1}}"</p>
+                                {{#ifEquals card/q1 ""}}
+                                    {{#ifEquals card/q2 ""}}
+                                        <p class="alert">Nenhum texto foi escrito</p>
+                                    {{else}}
+                                        <p>"{{card/q2}}"</p>
+                                    {{/ifEquals}}
+                                {{else}}
+                                    <p>"{{card/q1}}"</p>
+                                {{/ifEquals}}
+                                <div class="modificadores">
+                                        <input type="submit" name="card" id="fav{{card/id}}" value="fav{{card/id}}" style="display: none;">
+                                        <input type="submit" name="card" id="edi{{card/id}}" value="edi{{card/id}}" style="display: none;">
+                                        <input type="submit" name="card" id="exc{{card/id}}" value="exc{{card/id}}" style="display: none;">
+
+                                        <label for="fav{{card/id}}"><i class="fi fi-rr-star"></i></label>
+                                        <label for="edi{{card/id}}"><i class="fi fi-rr-pencil"></i></label>
+                                        <label for="exc{{card/id}}"><i class="fi fi-rr-trash"></i></label>
+                                </div>
+                                <span class="data">{{card/data}}</span>
+                            </div>
+                        </div>
                     {{/ifEquals}}
-                    <div class="modificadores">
-                        <a href="/criar/editar"><i class="fi fi-rr-pencil"></i></a>
-                        <a href="/criar/excluir"><i class="fi fi-rr-trash"></i></a>
-                    </div>
-                    <span class="data">{{card/data}}</span>
-                </div>
-            {{/each}}
+                {{/each}}
+
+                {{#each cards as | card |}}
+                    {{#ifEquals card/fav 1}}
+                        <div class="top">
+                            <div class="card">
+                                {{#ifEquals card/versInicial card/versFinal}}
+                                    <h1>{{card/livro}} {{card/capitulo}}:{{card/versInicial}}</h1>
+                                {{else}}
+                                    <h1>{{card/livro}} {{card/capitulo}}:{{card/versInicial}}-{{card/versFinal}}</h1>
+                                {{/ifEquals}}
+
+                                {{#ifEquals card/q1 ""}}
+                                    {{#ifEquals card/q2 ""}}
+                                        <p class="alert">Nenhum texto foi escrito</p>
+                                    {{else}}
+                                        <p>"{{card/q2}}"</p>
+                                    {{/ifEquals}}
+                                {{else}}
+                                    <p>"{{card/q1}}"</p>
+                                {{/ifEquals}}
+                                <div class="modificadores">
+                                        <input type="submit" name="card" id="fav{{card/id}}" value="fav{{card/id}}" style="display: none;">
+                                        <input type="submit" name="card" id="edi{{card/id}}" value="edi{{card/id}}" style="display: none;">
+                                        <input type="submit" name="card" id="exc{{card/id}}" value="exc{{card/id}}" style="display: none;">
+
+                                        <label for="fav{{card/id}}"><i class="fi fi-sr-star"></i></label>
+                                        <label for="edi{{card/id}}"><i class="fi fi-rr-pencil"></i></label>
+                                        <label for="exc{{card/id}}"><i class="fi fi-rr-trash"></i></label>
+                                </div>
+                                <span class="data">{{card/data}}</span>
+                            </div>
+                        </div>
+                    {{/ifEquals}}
+                {{/each}}
+            </form>
         </div>
 
         <div class="coluna">
@@ -68,8 +115,8 @@
                 <h1>Persistência {{level}}</h1>
                 <div class="content">
                     <div class="barra">
-                        <span class="feito">{{cards}}</span>
-                        <progress id="progress" value={{cards}} max={{cardsLevel}}></progress>
+                        <span class="feito">{{cardsF}}</span>
+                        <progress id="progress" value={{cardsFM}} max={{cardsLevelFM}}></progress>
                         <span class="total">{{cardsLevel}}</span>
                     </div>
                     <p>Faça {{cardsLevel}} devocionais</p>

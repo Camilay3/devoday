@@ -14,6 +14,8 @@
     <title>Criar card</title>
 </head>
 <body>
+    {{> preloader }}
+
     <div class="cont">
         <a href="/" class="sair">Sair do tutorial</a>
         <img src="/imgs/felizFB.png" alt="guia">
@@ -26,8 +28,8 @@
             </div>
         </div>
     </div>
-    {{> header }}
 
+    {{> header }}
     <section>
         <div class="left">
             <form action="/criar/resultado" method="POST" class="boxShadow form">
@@ -185,15 +187,23 @@
         <div class="rigth boxShadow marcado">
             <form action="/criar/devocional" method="post">
             <input type="text" name="titulo2" value="{{titInp}}" style="display: none;">
-                <h1>Devo xx.xx.xxxx</h1>
+                <h1>Devo {{datadevo}}</h1>
                 <div class="label">
                     <label for="q1">O que a passagem quer dizer?</label>
-                    <textarea class="boxShadow" name="q1" id="q1" placeholder="O que o texto significa? Qual o contexto da passagem?" rows="3"></textarea>
+                    {{#if q1}}
+                        <textarea class="boxShadow" name="q1" id="q1" placeholder="O que o texto significa? Qual o contexto da passagem?" rows="3">{{q1}}</textarea>
+                    {{else}}
+                        <textarea class="boxShadow" name="q1" id="q1" placeholder="O que o texto significa? Qual o contexto da passagem?" rows="3"></textarea>
+                    {{/if}}
                 </div>
                 <div class="space"></div>
                 <div class="label">
                     <label for="q2">O que Deus está me falando a partir dela?</label>
-                    <textarea class="boxShadow" name="q2" id="q2" placeholder="O que o texto me diz? O que eu respondo a Deus?" rows="3"></textarea>
+                    {{#if q2}}
+                        <textarea class="boxShadow" name="q2" id="q2" placeholder="O que o texto me diz? O que eu respondo a Deus?" rows="3">{{q2}}</textarea>
+                    {{else}}
+                        <textarea class="boxShadow" name="q2" id="q2" placeholder="O que o texto me diz? O que eu respondo a Deus?" rows="3"></textarea>
+                    {{/if}}
                 </div>
             
                 {{#if err}}

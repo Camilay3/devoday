@@ -16,12 +16,9 @@ hbs.registerHelper('json', function (content) {
 let mensagem;
 let titulo;
 const { verify } = require('jsonwebtoken');
-
 const userIcon = require('../userIcon');
 
-
 let imagens = ['cordeiro', 'coelho'];
-
 
 // Escolher leitura
 exports.escolha = async (req, res) => {
@@ -133,7 +130,7 @@ exports.escolha = async (req, res) => {
                         q2: cardsUser[0].q2
                     });
                 } else if (usuarioCookie.ima == x) {
-                    return res.render('card', {
+                    return res.render('tutorial/tutoC', {
                         imagem: imagens[x-1],
                         txts_old: antigo.livros,
                         txts_new: novo.livros,
