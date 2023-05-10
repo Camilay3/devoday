@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const antigo = require('../bibliaAPI/textosAntigo');
-const novo = require('../bibliaAPI/textosNovo');
+const antigo = require('../api/textosAntigo');
+const novo = require('../api/textosNovo');
 const { verify } = require('jsonwebtoken');
 
 const userIcon = require('../userIcon');

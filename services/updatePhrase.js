@@ -4,9 +4,9 @@ let dbContent = fs.readFileSync(localDbPath, "utf8");
 let db = JSON.parse(dbContent);
 
 const getPhrase = () => {
-  const fun = require('../bibliaAPI/class');
-  const antigo = require('../bibliaAPI/textosAntigo');
-  const novo = require('../bibliaAPI/textosNovo');
+  const fun = require('../api/class');
+  const antigo = require('../api/textosAntigo');
+  const novo = require('../api/textosNovo');
 
   const fs = require("fs");
   const localDbPath = `${__dirname}/../localdb.json`;
