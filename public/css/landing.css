@@ -80,22 +80,25 @@ section img {
 /* ABOUT */
 .cem {
     height: 100vh;
+    position: relative;
 }
 
-.svg {
+.cem, .sobre {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.cem svg {
     position: absolute;
     bottom: 0;
 }
 
 .sobre {
-    top: 100vh;
-    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 1.5em;
     z-index: 1;
-    padding: 0;
 }
 
 .sobre h2 {
