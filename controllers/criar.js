@@ -24,6 +24,16 @@ let imagens = ['cordeiro', 'coelho'];
 exports.escolha = async (req, res) => {
     const { livro, capitulo, verI, verF } = req.body; // Recebe os valores do formulário
     let cardsUser;
+    const accessToken = req.cookies["access-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
+    const tutoToken = req.cookies["tuto-token"];
+
+    let usuarios = await prisma.Users.findMany({select: {
+        id: true
+        }, where: {
+            email: usuarioCookie.username
+        }
+    });
 
     //ANTIGO 
     for (a = 0; a < antigo.livros.length; a++) {
@@ -38,7 +48,7 @@ exports.escolha = async (req, res) => {
                             for (d = 1; d <= antigo.livros[a].leitura[b]["versi"]; d++) {
                                 if (d == verF) { // Para saber o versículo final
                                     mensagem = fun.agrupar(antigo.livros[a], b, c, d);
-                                    titulo = c == d ? `${antigo.livros[a].abr} ${b}:${c}` : `${antigo.livros[a].abr} ${b}:${c}-${d}`;
+                                    titulo = c >= d  ? `${antigo.livros[a].abr} ${b}:${c}` : `${antigo.livros[a].abr} ${b}:${c}-${d}`;
                                     cardsUser = await prisma.Cards.findMany({select: {
                                         id: true,
                                         livro: true,
@@ -49,6 +59,7 @@ exports.escolha = async (req, res) => {
                                         q1: true,
                                         q2: true
                                         }, where: {
+                                            donoId: usuarios[0].id,
                                             livro: antigo.livros[a].abr,
                                             capitulo: b,
                                             versInicial: c,
@@ -69,7 +80,7 @@ exports.escolha = async (req, res) => {
                             for (d = 1; d <= novo.livros[a].leitura[b]["versi"]; d++) {
                                 if (d == verF) { // Para saber o versículo final
                                     mensagem = fun.agrupar(novo.livros[a], b, c, d);
-                                    titulo = c == d ? `${novo.livros[a].abr} ${b}:${c}` : `${novo.livros[a].abr} ${b}:${c}-${d}`;
+                                    titulo = c >= d ? `${novo.livros[a].abr} ${b}:${c}` : `${novo.livros[a].abr} ${b}:${c}-${d}`;
                                     cardsUser = await prisma.Cards.findMany({select: {
                                         id: true,
                                         livro: true,
@@ -80,6 +91,7 @@ exports.escolha = async (req, res) => {
                                         q1: true,
                                         q2: true
                                         }, where: {
+                                            donoId: usuarios[0].id,
                                             livro: novo.livros[a].abr,
                                             capitulo: b,
                                             versInicial: c,
@@ -88,16 +100,6 @@ exports.escolha = async (req, res) => {
                                     });
     }}}}}}}}
 
-    const accessToken = req.cookies["access-token"];
-    var usuarioCookie = verify(accessToken, process.env.TOKEN);
-    const tutoToken = req.cookies["tuto-token"];
-
-    let usuarios = await prisma.Users.findMany({select: {
-        id: true
-        }, where: {
-            email: usuarioCookie.username
-        }
-    })
 
     let mensi;
     let dataCode = new Date();
@@ -255,6 +257,7 @@ exports.envio = async (req, res) => {
             q1: true,
             q2: true
             }, where: {
+                donoId: usuarios[0].id,
                 livro: livro[0],
                 capitulo: parseInt(cap),
                 versInicial: parseInt(verINICIA),
