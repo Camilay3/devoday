@@ -1,18 +1,18 @@
-const fs = require("fs");
-const localDbPath = `${__dirname}/../localdb.json`;
-let dbContent = fs.readFileSync(localDbPath, "utf8");
-let db = JSON.parse(dbContent);
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const getPhrase = () => {
+const getPhrase = async () => {
   const fun = require('../api/class');
   const antigo = require('../api/textosAntigo');
   const novo = require('../api/textosNovo');
 
-  const fs = require("fs");
-  const localDbPath = `${__dirname}/../localdb.json`;
-  let dbContent = fs.readFileSync(localDbPath, "utf8");
-  let db = JSON.parse(dbContent);
-  let sug1 = db.phrase.titulo;
+  let db = await prisma.Frases.findMany({select: {
+    lastUpdate: true,
+    titulo: true,
+    text: true
+  }});
+
+  let sug1 = db[0].titulo;
   let sug2 = sug1.split('_');
 
   let variTest = Math.floor(Math.random() * 2); // Escolhe qual das duas variáveis usar
@@ -97,23 +97,33 @@ const getPhrase = () => {
   }
 };
 
-const updatePhrase = (datas) => {
-  const data = JSON.parse(fs.readFileSync("localdb.json", "utf8"));
+const updatePhrase = async (datas) => {
   let valores = getPhrase();
-  data.phrase.titulo = valores.tit
-  data.phrase.text = valores.text;
-  data.phrase.lastUpdate = new Date(datas).toISOString();
-  fs.writeFileSync(`${__dirname}/../localdb.json`, JSON.stringify(data));
+
+  await prisma.Frases.update({where: { 
+      id: 1 
+    }, data: { 
+        lastUpdate: new Date(datas).toISOString(),
+        titulo: valores.tit,
+        text: valores.text
+    }
+  });
 };
 
-const verifyTimeLeft = () => {
-  const lastUpdate = new Date(db.phrase.lastUpdate);
+const verifyTimeLeft = async () => {
+  let db = await prisma.Frases.findMany({select: {
+    lastUpdate: true,
+    titulo: true,
+    text: true
+  }});
+  const lastUpdate = new Date(db[0].lastUpdate);
   const nowFullHour = new Date();
 
   const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), 0, 0, 0, 0);
 
   const timeDiff = Math.abs(now.getTime() - lastUpdate.getTime());
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+
   if (hoursDiff >= 24) {
     updatePhrase(now);
   }

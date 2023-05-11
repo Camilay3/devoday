@@ -39,3 +39,12 @@ model Cards {
 
   @@map("cards")
 }
+
+model Frases {
+  id Int @id @default(autoincrement())
+  lastUpdate String
+  titulo String
+  text String
+  
+  @@map("frases")
+}

@@ -32,3 +32,10 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
 ALTER TABLE "cards" ADD CONSTRAINT "cards_donoId_fkey" FOREIGN KEY ("donoId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+CREATE TABLE "frases" (
+    "id" SERIAL NOT NULL,
+    "lastUpdate" TEXT NOT NULL,
+    "titulo" TEXT NOT NULL,
+    "text" TEXT NOT NULL
+);
