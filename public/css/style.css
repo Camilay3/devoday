@@ -51,7 +51,7 @@ a:visited {
     text-decoration: none;
 }
 
-.boxShadow, .card {
+.boxShadow {
     background-color: white;
     box-shadow: 0px 0px 10px 10px #0000001a;
 }

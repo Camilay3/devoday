@@ -143,6 +143,10 @@ footer p, footer a {
     .checks {
         flex-wrap: wrap;
     }
+
+    .cem {
+        height: 80vh;
+    }
 }
 
 @media screen and (max-width: 390px){

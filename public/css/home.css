@@ -27,6 +27,8 @@ section {
     max-height: 170px;
     position: relative;
     padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 2px 2px #00000006;
 }
 
 .cards::-webkit-scrollbar, .cards ::-webkit-scrollbar, .sugestao p::-webkit-scrollbar {
@@ -185,5 +187,14 @@ progress[value]::-webkit-progress-value{
         max-width: 100%;
         width: 100%;
         margin: 10px 0;
+    }
+
+    .novo {
+        width: 30px;
+        height: 40px;
+    }
+
+    .novo a {
+        transform: scale(1);
     }
 }
