@@ -41,6 +41,11 @@ p.alert {
     color: red;
 }
 
+a:link {
+    color: var(--color01);
+    text-decoration: none;
+}
+
 a:hover {
     cursor: pointer;
     color: var(--color03);
@@ -49,6 +54,10 @@ a:hover {
 a:visited {
     color: var(--color01);
     text-decoration: none;
+}
+
+a:active {
+    color: var(--color04);
 }
 
 .boxShadow {

@@ -126,7 +126,7 @@ exports.escolha = async (req, res) => {
                         txts_old: antigo.livros,
                         txts_new: novo.livros,
                         datadevo: cardsUser[0].data,
-                        message: mensagem,
+                        message: mensi,
                         tit: titulo,
                         q1: cardsUser[0].q1,
                         q2: cardsUser[0].q2
@@ -190,7 +190,7 @@ exports.escolha = async (req, res) => {
                         txts_old: antigo.livros,
                         txts_new: novo.livros,
                         datadevo: data2,
-                        message: mensi,
+                        message: mensagem,
                         tit: titulo
                     });
                 }

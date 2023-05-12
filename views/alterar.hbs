@@ -14,19 +14,19 @@
         {{> preloader }}
         
         <div class="cont" style="display: none;">
-            <a href="alterar" class="sair">Cancelar exclusão</a>
+            <a href="../alterar" class="sair">Cancelar exclusão</a>
             <img src="/imgs/tristeFB.png" alt="guia">
             <div class="txts">
                 <div class="text">
                     <h1>Cuidado!</h1>
-                    <p>Tem certeza que deseja mesmo deletar sua conta? Isso destruirá todos os seus devocionais e não poderá recuperá-los. Se quiser mesmo fazer isso clique em "continuar exclusão". Caso o devoday tenha te decepcionado, nós aceitamos sugestões na aba <a href="feedback" class="btn criar" style="text-decoration: underline;">feedback</a>. Espero te ver novamente para que possamos recomeçar nossa jornada!</p>
+                    <p>Tem certeza que deseja mesmo deletar sua conta? Isso destruirá todos os seus devocionais e não poderá recuperá-los. Se quiser mesmo fazer isso clique em "continuar exclusão". Caso o devoday tenha te decepcionado, nós aceitamos sugestões na aba <a href="../feedback" class="btn criar" style="text-decoration: underline;">feedback</a>. Espero te ver novamente para que possamos recomeçar nossa jornada!</p>
                     <a onclick="fechar()" class="btn criar">Continuar exclusão</a>
                 </div>
             </div>
         </div>
         <form class="boxShadow" action="/auth/alterar" method="POST">
 
-            <select name="altera" id="action" onclick="mudou1(value)">
+            <select name="altera" id="action" onblur="mudou1(value)">
                 <option value="outro" disabled selected>Selecione sua ação</option>
                 <option value="email">Alterar email</option>
                 <option value="senha">Alterar senha</option>
@@ -113,7 +113,7 @@
             {{/if}}
             <input type="submit" class="btn criar" value="Alterar dados" style="display: none;">
             <input type="submit" class="btn criar" value="Excluir conta" style="display: none;" id="delete">
-            <a href="home" class="btn criar">Cancelar alteração</a>
+            <a href="../home" class="btn criar">Cancelar alteração</a>
         </form>
 
         <script src="/js/login.js"></script>

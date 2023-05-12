@@ -35,7 +35,7 @@
             <form action="/criar/resultado" method="POST" class="boxShadow form">
             <div class="label">
                 <label for="Livro">Livro</label>
-                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" onclick="mudou1(value)" required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
+                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" onblur="mudou1(value)" required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
                     <option selected disabled>Escolha o livro</option>
                     <optgroup label="Antigo Testamento">
                         {{#each txts_old as | livro |}}
@@ -65,7 +65,7 @@
 
             <div class="label">
                 <label for="Capítulo">Capítulo</label>
-                <select class="form-select" aria-label="Default select example" id="Capítulo" name="capitulo" onclick="mudou2(value)" required>
+                <select class="form-select" aria-label="Default select example" id="Capítulo" name="capitulo" onblur="mudou2(value)" required>
                     <option selected disabled>Escolha o capítulo</option>
                 </select>
             </div>

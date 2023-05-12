@@ -287,7 +287,7 @@ router.get('/trocar', (req, res) => {
     }
 });
 
-router.get('/auth/tutorial', (req, res) => {
+/* router.get('/auth/tutorial', (req, res) => {
     const accessToken = req.cookies["access-token"];
 
     if (!accessToken) {
@@ -355,7 +355,7 @@ router.get('/auth/feedback', (req, res) => {
     } else {
         return res.render('feedback')
     }
-});
+}); 
 
 router.get('/auth/sugerido', async (req, res) => {
     const accessToken = req.cookies["access-token"];
@@ -642,6 +642,5 @@ router.get('/criar/verificar', (req, res) => {
         var usuarioCookie = verify(accessToken, process.env.TOKEN);
         userIcon(usuarioCookie, 'index', res);
     } 
-});
-
+}); */
 module.exports = router;
