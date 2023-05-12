@@ -87,7 +87,7 @@ router.get('/sugerido', async (req, res) => {
         let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
         let data2 = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
-        let imagens = ['cordeiro', 'coelho']
+        let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
 
         let cardsUser = await prisma.cards.findMany({select: {
             id: true,
@@ -375,7 +375,7 @@ router.get('/auth/sugerido', async (req, res) => {
         let sug2 = sug1.split('_');
         let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
         let sugestaoTex = db[0].text;
-        let imagens = ['cordeiro', 'coelho']
+        let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
 
         for (let x = 1; x <= imagens.length; x++) {
             if (usuarioCookie.ima == 0) {
@@ -563,7 +563,7 @@ router.get('/criar/sugerido', async (req, res) => {
         let sug2 = sug1.split('_');
         let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
         let sugestaoTex = db[0].text;
-        let imagens = ['cordeiro', 'coelho']
+        let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
 
         for (let x = 1; x <= imagens.length; x++) {
             if (usuarioCookie.ima == 0) {

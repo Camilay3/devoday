@@ -40,7 +40,7 @@
                 <script>
                     let antes = document.querySelector('.antes');
                     let depois = document.querySelector('.depois');
-                    let imagens = ['cordeiro', 'coelho'];
+                    let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
 
                     function mostra() {
                         let labels = document.querySelectorAll('.depois label');
@@ -62,7 +62,7 @@
                                     label.htmlFor = 'radio' + x
                                     let icone = document.createElement('img');
 
-                                    icone.src = '/imgs/' + imagens[x-1] + '.jpg';
+                                    icone.src = '/imgs/' + imagens[x-1] + '.png';
                                     icone.className = 'i'
                                     icone.id = 'i' + x;
 

@@ -126,7 +126,7 @@
             let deletar = document.querySelector('.deletarI');
             let inputS = document.querySelector('input.criar');
             let inputD = document.querySelector('input#delete');
-            let imagens = ['cordeiro', 'coelho'];
+            let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
             
             function mudou1(valor) {
                 imagem.innerText = "";
@@ -177,7 +177,7 @@
                         label.htmlFor = 'radio' + x
                         let icone = document.createElement('img');
 
-                        icone.src = '/imgs/' + imagens[x-1] + '.jpg';
+                        icone.src = '/imgs/' + imagens[x-1] + '.png';
                         icone.className = 'i'
                         icone.id = 'i' + x;
 
