@@ -189,34 +189,49 @@ router.get('/tutorial', (req, res) => {
 
 router.get('/tutorialB', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoB', res);
-    }
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoB', res);
+        }
+    } 
 });
 
 router.get('/tutorialC', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoC', res);
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoC', res);
+        }
     }
 });
 
 router.get('/tutorialD', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoD', res);
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoD', res);
+        }
     }
 });
 
@@ -286,34 +301,49 @@ router.get('/auth/tutorial', (req, res) => {
 
 router.get('/auth/tutorialB', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoB', res);
-    }
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoB', res);
+        }
+    } 
 });
 
 router.get('/auth/tutorialC', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoC', res);
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoC', res);
+        }
     }
 });
 
 router.get('/auth/tutorialD', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoD', res);
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoD', res);
+        }
     }
 });
 
@@ -469,34 +499,49 @@ router.get('/criar/tutorial', (req, res) => {
 
 router.get('/criar/tutorialB', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoB', res);
-    }
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoB', res);
+        }
+    } 
 });
 
 router.get('/criar/tutorialC', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoC', res);
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoC', res);
+        }
     }
 });
 
 router.get('/criar/tutorialD', (req, res) => {
     const accessToken = req.cookies["access-token"];
+    const tutoToken = req.cookies["tuto-token"];
+    var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (!accessToken) {
-        return res.render('login')
+        return res.render('login');
     } else {
-        var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'tutorial/tutoD', res);
+        if (!tutoToken) {
+            userIcon(usuarioCookie, 'index', res);
+        } else {
+            userIcon(usuarioCookie, 'tutorial/tutoD', res);
+        }
     }
 });
 
