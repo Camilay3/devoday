@@ -52,7 +52,8 @@ function createCookie(USER, res) {
 
 // REGISTRAR
 exports.register = async (req, res) => {
-    const { email, senha, icone } = req.body;
+    const { emai, senha, icone } = req.body;
+    const email = emai.toLowerCase();
     
     let usuarios = await prisma.users.findMany({select: {
             email: true,
@@ -138,8 +139,13 @@ exports.verificar = async (req, res) => {
             emailenv: usuarios[0].email
         })
 
+    } else if (!(codeE == usuarios[0].token * 2)) {
+        res.render('recuperar', {
+            emailenv: usuarios[0].email,
+            message: "Código de verificação inválido, tente novamente"
+        })
     } else {
-        res.render('verificação', {
+        res.render('login', {
             message: "Código de verificação inválido, tente novamente"
         })
     }
@@ -147,7 +153,8 @@ exports.verificar = async (req, res) => {
 
 // LOGAR
 exports.login = async (req, res) => {
-    const { email, senha } = req.body;
+    const { emai, senha } = req.body;
+    const email = emai.toLowerCase();
 
     let usuarios = await prisma.users.findMany({select: {
         email: true,
@@ -212,12 +219,20 @@ exports.avaliar = (req, res) => {
 
 // ALTERAR DADOS
 exports.alterar = async (req, res) => {
-    const {emailIemailant, emailIemail, emailIsenha} = req.body;
-    const {senhaIemail, senhaIsenhaant, senhaIsenha} = req.body;
-    const {deletarIemail, deletarIsenha} = req.body;
-    const {senhaEemail, senhaEsenha} = req.body;
-    const {emailEEmail, emailEemail, emailEsenha} = req.body;
+    const {emailIemailan, emailIemai, emailIsenha} = req.body;
+    const {senhaIemai, senhaIsenhaant, senhaIsenha} = req.body;
+    const {deletarIemai, deletarIsenha} = req.body;
+    const {senhaEemai, senhaEsenha} = req.body;
+    const {emailEEmai, emailEemai, emailEsenha} = req.body;
     const {icone} = req.body;
+
+    const emailIemailant = emailIemailan.toLowerCase();
+    const emailIemail = emailIemai.toLowerCase();
+    const senhaIemail = senhaIemai.toLowerCase();
+    const deletarIemail = deletarIemai.toLowerCase();
+    const senhaEemail = senhaEemai.toLowerCase();
+    const emailEEmail = emailEEmai.toLowerCase();
+    const emailEemail = emailEemai.toLowerCase();
 
     if (emailIemailant && emailIemail && emailIsenha) {
         let usuarios = await prisma.users.findMany({select: {

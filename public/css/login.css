@@ -107,6 +107,7 @@ label {
 .box input {
     margin-right: auto;
     font-size: 1.2em;
+    width: 100%;
 }
 
 .input {

@@ -144,7 +144,7 @@ section {
     section {
         flex-direction: column;
         align-items: center;
-        height: 180vh;
+        height: 120vh;
     }
 
     .left, .rigth {
@@ -160,27 +160,44 @@ section {
     .left form {
         height: 28%;
     }
+
+    .left {
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .left {
+        height: 58%;
+        margin-bottom: 40px;
+    }
 }
 
 @media screen and (max-width: 435px){
     section {
-        height: 160vh;
+        height: 125vh;
     }
 
     .left form {
         height: 48%;
     }
 
-    .rigth {
+    .left {
         height: 50%;
+        margin-bottom: 0px;
     }
 
-    .left {
-        height: 60%;
+    .rigth {
+        height: 40%;
     }
 }
 
 @media screen and (max-width: 360px){
+    .left {
+        height: 45%;
+        margin-bottom: 20px;
+    }
+
     .left form {
         height: 52%;
     }
