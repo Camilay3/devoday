@@ -28,7 +28,7 @@ exports.escolha = async (req, res) => {
     var usuarioCookie = verify(accessToken, process.env.TOKEN);
     const tutoToken = req.cookies["tuto-token"];
 
-    let usuarios = await prisma.Users.findMany({select: {
+    let usuarios = await prisma.users.findMany({select: {
         id: true
         }, where: {
             email: usuarioCookie.username
@@ -49,7 +49,7 @@ exports.escolha = async (req, res) => {
                                 if (d == verF) { // Para saber o versículo final
                                     mensagem = fun.agrupar(antigo.livros[a], b, c, d);
                                     titulo = c >= d  ? `${antigo.livros[a].abr} ${b}:${c}` : `${antigo.livros[a].abr} ${b}:${c}-${d}`;
-                                    cardsUser = await prisma.Cards.findMany({select: {
+                                    cardsUser = await prisma.cars.findMany({select: {
                                         id: true,
                                         livro: true,
                                         capitulo: true,
@@ -81,7 +81,7 @@ exports.escolha = async (req, res) => {
                                 if (d == verF) { // Para saber o versículo final
                                     mensagem = fun.agrupar(novo.livros[a], b, c, d);
                                     titulo = c >= d ? `${novo.livros[a].abr} ${b}:${c}` : `${novo.livros[a].abr} ${b}:${c}-${d}`;
-                                    cardsUser = await prisma.Cards.findMany({select: {
+                                    cardsUser = await prisma.cars.findMany({select: {
                                         id: true,
                                         livro: true,
                                         capitulo: true,
@@ -229,9 +229,9 @@ exports.envio = async (req, res) => {
     var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
     if (titulo != undefined || titulo2.length > 0) {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
                 id: true,
-                cards: true
+                num_cards: true
             }, where: {
                 email: usuarioCookie.username
             }
@@ -247,7 +247,7 @@ exports.envio = async (req, res) => {
         let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
         let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
-        let cardsUserF = await prisma.Cards.findMany({select: {
+        let cardsUserF = await prisma.cars.findMany({select: {
             id: true,
             livro: true,
             capitulo: true,
@@ -266,7 +266,7 @@ exports.envio = async (req, res) => {
         });
 
         if (cardsUserF.length > 0) {
-            await prisma.Cards.update({where: {
+            await prisma.cars.update({where: {
                     id: cardsUserF[0].id,
                 }, data: {
                     livro: livro[0],
@@ -279,7 +279,7 @@ exports.envio = async (req, res) => {
             });
 
         } else {
-            await prisma.Cards.create({data: {
+            await prisma.cars.create({data: {
                 livro: livro[0],
                 capitulo: parseInt(cap[0]),
                 versInicial: parseInt(verINICIA[0]),
@@ -290,10 +290,10 @@ exports.envio = async (req, res) => {
                 donoId: usuarios[0].id
             }});
     
-            await prisma.Users.update({where: { 
+            await prisma.users.update({where: { 
                     email: usuarioCookie.username 
                 }, data: { 
-                    cards: usuarios[0].cards + 1
+                    num_cards: usuarios[0].num_cards + 1
                 }
             })
         }
@@ -327,16 +327,16 @@ exports.modificar = async (req, res) => {
     const accessToken = req.cookies["access-token"];
     var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
-    let usuarios = await prisma.Users.findMany({select: {
+    let usuarios = await prisma.users.findMany({select: {
             id: true,
             email: true,
-            cards: true
+            num_cards: true
         }, where: {
             email: usuarioCookie.username
         }
     });
 
-    let cardsUser = await prisma.Cards.findMany({select: {
+    let cardsUser = await prisma.cars.findMany({select: {
             id: true,
             fav: true,
             livro: true,
@@ -353,7 +353,7 @@ exports.modificar = async (req, res) => {
 
     if (crud == 'fav') {
         if (cardsUser[0].fav == 0) {
-            await prisma.Cards.update({where: {
+            await prisma.cars.update({where: {
                     id: parseInt(ide),
                 }, data: {
                     fav: 1
@@ -361,7 +361,7 @@ exports.modificar = async (req, res) => {
             });
 
         } else {
-            await prisma.Cards.update({where: {
+            await prisma.cars.update({where: {
                     id: parseInt(ide),
                 }, data: {
                     fav: 0
@@ -415,14 +415,14 @@ exports.modificar = async (req, res) => {
         }
 
     } else if (crud == 'exc') { 
-        await prisma.Cards.delete({where: {
+        await prisma.cars.delete({where: {
                 id: parseInt(ide),
             }
         });
-        await prisma.Users.update({where: { 
+        await prisma.users.update({where: { 
                 email: usuarios[0].email 
             }, data: { 
-                cards: usuarios[0].cards - 1
+                num_cards: usuarios[0].num_cards - 1
             }
         });
     }

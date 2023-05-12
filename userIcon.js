@@ -16,15 +16,15 @@ let sugestaoTex = db.phrase.text;
 
 async function userIcon(vari, page, res) {
     if (page == 'index' || page == 'tutorial/tutoA' || page == 'tutorial/tutoD') {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
             id: true,
-            cards: true
+            num_cards: true
             }, where: {
                 email: vari.username
             }
         })
 
-        let cardsUser = await prisma.Cards.findMany({select: {
+        let cardsUser = await prisma.cars.findMany({select: {
             id: true,
             fav: true,
             livro: true,
@@ -39,17 +39,17 @@ async function userIcon(vari, page, res) {
             }
         })
 
-        let Lvl = Math.floor(parseInt(usuarios[0].cards) / 10) + 1 // Recupera o level
-        let cardsLvl = (Math.floor(parseInt(usuarios[0].cards) / 10) * 10) + 9 // Recupera o máximo de cards no level
-        let minCardsLvl = (Math.floor(parseInt(usuarios[0].cards) / 10) * 10) // Recupera o mínimo de cards no level
+        let Lvl = Math.floor(parseInt(usuarios[0].num_cards) / 10) + 1 // Recupera o level
+        let cardsLvl = (Math.floor(parseInt(usuarios[0].num_cards) / 10) * 10) + 9 // Recupera o máximo de cards no level
+        let minCardsLvl = (Math.floor(parseInt(usuarios[0].num_cards) / 10) * 10) // Recupera o mínimo de cards no level
 
         for (let x = 1; x <= imagens.length; x++) {
             if (vari.ima == 0) {
                 return res.render(page, {
                     level: Lvl,
                     cards: cardsUser,
-                    cardsF: usuarios[0].cards,
-                    cardsFM: 9 - (cardsLvl - usuarios[0].cards),
+                    cardsF: usuarios[0].num_cards,
+                    cardsFM: 9 - (cardsLvl - usuarios[0].num_cards),
                     cardsLevelFM: cardsLvl+1 - minCardsLvl,
                     cardsLevel: cardsLvl+1,
                     sugTit: sugestaoTit,
@@ -60,8 +60,8 @@ async function userIcon(vari, page, res) {
                     imagem: imagens[x-1],
                     level: Lvl,
                     cards: cardsUser,
-                    cardsF: usuarios[0].cards,
-                    cardsFM: 9 - (cardsLvl - usuarios[0].cards),
+                    cardsF: usuarios[0].num_cards,
+                    cardsFM: 9 - (cardsLvl - usuarios[0].num_cards),
                     cardsLevelFM: cardsLvl+1 - minCardsLvl,
                     cardsLevel: cardsLvl+1,
                     sugTit: sugestaoTit,

@@ -54,7 +54,7 @@ function createCookie(USER, res) {
 exports.register = async (req, res) => {
     const { email, senha, icone } = req.body;
     
-    let usuarios = await prisma.Users.findMany({select: {
+    let usuarios = await prisma.users.findMany({select: {
             email: true,
             senha: true,
             verify: true
@@ -85,7 +85,7 @@ exports.register = async (req, res) => {
 
         enviarEmail(email, "Verificação de usuário", "verificação", {code: code});
 
-        await prisma.Users.create({data: {
+        await prisma.users.create({data: {
             email,
             senha: hashedPassword,
             token: code,
@@ -101,7 +101,7 @@ exports.register = async (req, res) => {
 exports.verificar = async (req, res) => {
     const { codeE, emaile } = req.body;
 
-    let usuarios = await prisma.Users.findMany({select: {
+    let usuarios = await prisma.users.findMany({select: {
         email: true,
         icon: true,
         token: true
@@ -111,7 +111,7 @@ exports.verificar = async (req, res) => {
     })
 
     if (codeE == usuarios[0].token) {
-        await prisma.Users.update({where: { 
+        await prisma.users.update({where: { 
             email: emaile 
             }, data: { 
                 verify: 1 
@@ -149,7 +149,7 @@ exports.verificar = async (req, res) => {
 exports.login = async (req, res) => {
     const { email, senha } = req.body;
 
-    let usuarios = await prisma.Users.findMany({select: {
+    let usuarios = await prisma.users.findMany({select: {
         email: true,
         senha: true,
         icon: true,
@@ -220,14 +220,14 @@ exports.alterar = async (req, res) => {
     const {icone} = req.body;
 
     if (emailIemailant && emailIemail && emailIsenha) {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
             senha: true
             }, where: {
                 email: emailIemailant
             }
         })
 
-        let usuariosNovo = await prisma.Users.findMany({select: {
+        let usuariosNovo = await prisma.users.findMany({select: {
             email: true
             }, where: {
                 email: emailIemail
@@ -248,7 +248,7 @@ exports.alterar = async (req, res) => {
             });
         } else {
             let code = Math.floor((Math.random() * (9999-1111)) +1111);
-            await prisma.Users.update({where: { 
+            await prisma.users.update({where: { 
                 email: emailIemailant 
                 }, data: { 
                     verify: 0,
@@ -265,7 +265,7 @@ exports.alterar = async (req, res) => {
         }
 
     } else if (senhaIemail && senhaIsenhaant && senhaIsenha) {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
             senha: true
             }, where: {
                 email: senhaIemail
@@ -281,7 +281,7 @@ exports.alterar = async (req, res) => {
                 message: 'Não é possível alterar para a mesma senha'
             });
         } else {
-            await prisma.Users.update({where: { 
+            await prisma.users.update({where: { 
                 email: senhaIemail 
                 }, data: { 
                     senha: await bcrypt.hash(senhaIsenha, 8)
@@ -294,7 +294,7 @@ exports.alterar = async (req, res) => {
         }
 
     } else if (deletarIemail && deletarIsenha) {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
             email: true,
             senha: true
             }, where: {
@@ -307,7 +307,7 @@ exports.alterar = async (req, res) => {
                 message: 'A senha não corresponde ao usuário'
             });
         } else {
-            await prisma.Users.delete({
+            await prisma.users.delete({
                 where: {
                   email: deletarIemail,
                 },
@@ -318,7 +318,7 @@ exports.alterar = async (req, res) => {
         }
 
     } else if (senhaEsenha) {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
             senha: true
             }, where: {
                 email: senhaEemail
@@ -331,7 +331,7 @@ exports.alterar = async (req, res) => {
                 emailenv: senhaEemail
             });
         } else {
-            await prisma.Users.update({where: { 
+            await prisma.users.update({where: { 
                 email: senhaEemail
                 }, data: { 
                     senha: await bcrypt.hash(senhaEsenha, 8)
@@ -343,14 +343,14 @@ exports.alterar = async (req, res) => {
         }
 
     } else if (emailEEmail && emailEsenha) {
-        let usuarios = await prisma.Users.findMany({select: {
+        let usuarios = await prisma.users.findMany({select: {
             senha: true,
             }, where: {
                 email: emailEemail
             }
         })
 
-        let usuariosNovo = await prisma.Users.findMany({select: {
+        let usuariosNovo = await prisma.users.findMany({select: {
             email: true
             }, where: {
                 email: emailEEmail
@@ -371,7 +371,7 @@ exports.alterar = async (req, res) => {
             });
         } else {
             let code = Math.floor((Math.random() * (9999-1111)) +1111);
-            await prisma.Users.update({where: { 
+            await prisma.users.update({where: { 
                 email: emailEemail 
                 }, data: { 
                     verify: 0,
@@ -395,7 +395,7 @@ exports.alterar = async (req, res) => {
                 message: 'Não é possível alterar para o mesmo ícone'
             });
         } else {
-            await prisma.Users.update({where: { 
+            await prisma.users.update({where: { 
                     email: usuarioCookie.username
                 }, data: { 
                     icon: parseInt(icone)

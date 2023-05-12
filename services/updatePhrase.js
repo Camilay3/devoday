@@ -6,8 +6,8 @@ const getPhrase = async () => {
   const antigo = require('../api/textosAntigo');
   const novo = require('../api/textosNovo');
 
-  let db = await prisma.Frases.findMany({select: {
-    lastUpdate: true,
+  let db = await prisma.frases.findMany({select: {
+    lastupdate: true,
     titulo: true,
     text: true
   }});
@@ -98,12 +98,11 @@ const getPhrase = async () => {
 };
 
 const updatePhrase = async (datas) => {
-  let valores = getPhrase();
-
-  await prisma.Frases.update({where: { 
+  let valores = await getPhrase();
+  await prisma.frases.update({where: { 
       id: 1 
     }, data: { 
-        lastUpdate: new Date(datas).toISOString(),
+        lastupdate: new Date(datas).toISOString(),
         titulo: valores.tit,
         text: valores.text
     }
@@ -111,19 +110,18 @@ const updatePhrase = async (datas) => {
 };
 
 const verifyTimeLeft = async () => {
-  let db = await prisma.Frases.findMany({select: {
-    lastUpdate: true,
+  let db = await prisma.frases.findMany({select: {
+    lastupdate: true,
     titulo: true,
     text: true
   }});
-  const lastUpdate = new Date(db[0].lastUpdate);
+  const lastUpdate = new Date(db[0].lastupdate);
   const nowFullHour = new Date();
 
   const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), 0, 0, 0, 0);
 
   const timeDiff = Math.abs(now.getTime() - lastUpdate.getTime());
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
-
   if (hoursDiff >= 24) {
     updatePhrase(now);
   }

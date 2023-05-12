@@ -88,7 +88,7 @@ router.get('/sugerido', async (req, res) => {
 
         let imagens = ['cordeiro', 'coelho']
 
-        let cardsUser = await prisma.Cards.findMany({select: {
+        let cardsUser = await prisma.cars.findMany({select: {
             id: true,
             livro: true,
             capitulo: true,
@@ -120,7 +120,6 @@ router.get('/sugerido', async (req, res) => {
                     })
                     
                 } else if (usuarioCookie.ima == x) {
-                    console.log(cardsUser[0].data)
                     return res.render('card', {
                         imagem: imagens[x-1],
                         txts_old: antigo.livros,
