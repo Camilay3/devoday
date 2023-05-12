@@ -184,7 +184,7 @@ exports.escolha = async (req, res) => {
                         message: mensagem,
                         tit: titulo
                     });
-                } else {
+                } else if (usuarioCookie.ima == x) {
                     return res.render('tutorial/tutoC', {
                         imagem: imagens[x-1],
                         txts_old: antigo.livros,

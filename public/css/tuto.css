@@ -47,6 +47,7 @@
 
 p {
     overflow-y: auto;
+    max-height: 98%;
 }
 
 p::-webkit-scrollbar, .txts::-webkit-scrollbar {
