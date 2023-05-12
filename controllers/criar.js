@@ -49,7 +49,7 @@ exports.escolha = async (req, res) => {
                                 if (d == verF) { // Para saber o versículo final
                                     mensagem = fun.agrupar(antigo.livros[a], b, c, d);
                                     titulo = c >= d  ? `${antigo.livros[a].abr} ${b}:${c}` : `${antigo.livros[a].abr} ${b}:${c}-${d}`;
-                                    cardsUser = await prisma.cars.findMany({select: {
+                                    cardsUser = await prisma.cards.findMany({select: {
                                         id: true,
                                         livro: true,
                                         capitulo: true,
@@ -81,7 +81,7 @@ exports.escolha = async (req, res) => {
                                 if (d == verF) { // Para saber o versículo final
                                     mensagem = fun.agrupar(novo.livros[a], b, c, d);
                                     titulo = c >= d ? `${novo.livros[a].abr} ${b}:${c}` : `${novo.livros[a].abr} ${b}:${c}-${d}`;
-                                    cardsUser = await prisma.cars.findMany({select: {
+                                    cardsUser = await prisma.cards.findMany({select: {
                                         id: true,
                                         livro: true,
                                         capitulo: true,
@@ -247,7 +247,7 @@ exports.envio = async (req, res) => {
         let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
         let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
-        let cardsUserF = await prisma.cars.findMany({select: {
+        let cardsUserF = await prisma.cards.findMany({select: {
             id: true,
             livro: true,
             capitulo: true,
@@ -266,7 +266,7 @@ exports.envio = async (req, res) => {
         });
 
         if (cardsUserF.length > 0) {
-            await prisma.cars.update({where: {
+            await prisma.cards.update({where: {
                     id: cardsUserF[0].id,
                 }, data: {
                     livro: livro[0],
@@ -279,7 +279,7 @@ exports.envio = async (req, res) => {
             });
 
         } else {
-            await prisma.cars.create({data: {
+            await prisma.cards.create({data: {
                 livro: livro[0],
                 capitulo: parseInt(cap[0]),
                 versInicial: parseInt(verINICIA[0]),
@@ -336,7 +336,7 @@ exports.modificar = async (req, res) => {
         }
     });
 
-    let cardsUser = await prisma.cars.findMany({select: {
+    let cardsUser = await prisma.cards.findMany({select: {
             id: true,
             fav: true,
             livro: true,
@@ -353,7 +353,7 @@ exports.modificar = async (req, res) => {
 
     if (crud == 'fav') {
         if (cardsUser[0].fav == 0) {
-            await prisma.cars.update({where: {
+            await prisma.cards.update({where: {
                     id: parseInt(ide),
                 }, data: {
                     fav: 1
@@ -361,7 +361,7 @@ exports.modificar = async (req, res) => {
             });
 
         } else {
-            await prisma.cars.update({where: {
+            await prisma.cards.update({where: {
                     id: parseInt(ide),
                 }, data: {
                     fav: 0
@@ -415,7 +415,7 @@ exports.modificar = async (req, res) => {
         }
 
     } else if (crud == 'exc') { 
-        await prisma.cars.delete({where: {
+        await prisma.cards.delete({where: {
                 id: parseInt(ide),
             }
         });

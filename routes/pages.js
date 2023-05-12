@@ -67,15 +67,16 @@ router.get('/sugerido', async (req, res) => {
         const { PrismaClient } = require('@prisma/client');
         const prisma = new PrismaClient();  
         var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        const fs = require("fs");
-        const localDbPath = `${__dirname}/../localdb.json`;
-        let dbContent = fs.readFileSync(localDbPath, "utf8");
-        let db = JSON.parse(dbContent);
-        let sug1 = db.phrase.titulo;
-        let sug2 = sug1.split('_')
-
+        let db = await prisma.frases.findMany({select: {
+            lastupdate: true,
+            titulo: true,
+            text: true
+        }});
+        
+        let sug1 = db[0].titulo;
+        let sug2 = sug1.split('_');
         let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
-        let sugestaoTex = db.phrase.text;
+        let sugestaoTex = db[0].text;
 
         let sug2c = sug2[1].split(':')
         let sugv = sug2c[1].split('-');
@@ -88,7 +89,7 @@ router.get('/sugerido', async (req, res) => {
 
         let imagens = ['cordeiro', 'coelho']
 
-        let cardsUser = await prisma.cars.findMany({select: {
+        let cardsUser = await prisma.cards.findMany({select: {
             id: true,
             livro: true,
             capitulo: true,
@@ -326,7 +327,7 @@ router.get('/auth/feedback', (req, res) => {
     }
 });
 
-router.get('/auth/sugerido', (req, res) => {
+router.get('/auth/sugerido', async (req, res) => {
     const accessToken = req.cookies["access-token"];
 
     if (!accessToken) {
@@ -334,15 +335,16 @@ router.get('/auth/sugerido', (req, res) => {
 
     } else {
         var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        const fs = require("fs");
-        const localDbPath = `${__dirname}/../localdb.json`;
-        let dbContent = fs.readFileSync(localDbPath, "utf8");
-        let db = JSON.parse(dbContent);
-        let sug1 = db.phrase.titulo;
-        let sug2 = sug1.split('_')
-
+        let db = await prisma.frases.findMany({select: {
+            lastupdate: true,
+            titulo: true,
+            text: true
+        }});
+        
+        let sug1 = db[0].titulo;
+        let sug2 = sug1.split('_');
         let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
-        let sugestaoTex = db.phrase.text;
+        let sugestaoTex = db[0].text;
         let imagens = ['cordeiro', 'coelho']
 
         for (let x = 1; x <= imagens.length; x++) {
@@ -498,7 +500,7 @@ router.get('/criar/tutorialD', (req, res) => {
     }
 });
 
-router.get('/criar/sugerido', (req, res) => {
+router.get('/criar/sugerido', async (req, res) => {
     const accessToken = req.cookies["access-token"];
 
     if (!accessToken) {
@@ -506,15 +508,16 @@ router.get('/criar/sugerido', (req, res) => {
 
     } else {
         var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        const fs = require("fs");
-        const localDbPath = `${__dirname}/../localdb.json`;
-        let dbContent = fs.readFileSync(localDbPath, "utf8");
-        let db = JSON.parse(dbContent);
-        let sug1 = db.phrase.titulo;
-        let sug2 = sug1.split('_')
-
+        let db = await prisma.frases.findMany({select: {
+            lastupdate: true,
+            titulo: true,
+            text: true
+        }});
+        
+        let sug1 = db[0].titulo;
+        let sug2 = sug1.split('_');
         let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
-        let sugestaoTex = db.phrase.text;
+        let sugestaoTex = db[0].text;
         let imagens = ['cordeiro', 'coelho']
 
         for (let x = 1; x <= imagens.length; x++) {

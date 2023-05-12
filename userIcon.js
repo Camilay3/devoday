@@ -4,17 +4,18 @@ const novo = require('./api/textosNovo');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const fs = require("fs");
-const localDbPath = `${__dirname}/localdb.json`;
-let dbContent = fs.readFileSync(localDbPath, "utf8");
-let db = JSON.parse(dbContent);
-let sug1 = db.phrase.titulo;
-let sug2 = sug1.split('_');
-
-let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
-let sugestaoTex = db.phrase.text;
-
 async function userIcon(vari, page, res) {
+    let db = await prisma.frases.findMany({select: {
+        lastupdate: true,
+        titulo: true,
+        text: true
+    }});
+    
+    let sug1 = db[0].titulo;
+    let sug2 = sug1.split('_');
+    let sugestaoTit = sug2.length > 1 ? `${sug2[0]} ${sug2[1]}`: sug1;
+    let sugestaoTex = db[0].text;
+
     if (page == 'index' || page == 'tutorial/tutoA' || page == 'tutorial/tutoD') {
         let usuarios = await prisma.users.findMany({select: {
             id: true,
@@ -24,7 +25,7 @@ async function userIcon(vari, page, res) {
             }
         })
 
-        let cardsUser = await prisma.cars.findMany({select: {
+        let cardsUser = await prisma.cards.findMany({select: {
             id: true,
             fav: true,
             livro: true,

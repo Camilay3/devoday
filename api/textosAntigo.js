@@ -13839,7 +13839,7 @@ let ester = fun.newLivro (19, "Ester", "Est", 16, {
         11: "11.que trouxessem à sua presença a rainha Vasti, com o diadema real, para mostrar aos povos e aos grandes toda a sua beleza, porque era formosa de aspecto.",
         12: "12.Mas a rainha Vasti recusou sujeitar-se à ordem do rei transmitida pelos eunucos. O rei enfureceu-se e sua cólera se inflamou.",
         13: "13.Consultou os sábios versados na ciência dos tempos. (Porque os assuntos reais eram tratados desse modo, com jurisconsultos.",
-        14: "14.Seus assessores eram: Carsena, Setar, Admata, Társis, Mares, Marsana e Mamucã, sete príncipes da Pérsia e da Média, que contemplavam a face do rei e ocupavam os primeiros lugares no reino.)*",
+        14: "14.Seus assessores eram: cardsena, Setar, Admata, Társis, Mares, Marsana e Mamucã, sete príncipes da Pérsia e da Média, que contemplavam a face do rei e ocupavam os primeiros lugares no reino.)*",
         15: "15.“Que lei – disse ele – se deve aplicar à rainha Vasti, por não ter obedecido a ordem que o rei Assuero lhe transmitiu pelos eunucos?”",
         16: "16.“Não foi somente em relação ao rei – respondeu Mamucã – que se comportou mal a rainha Vasti, mas também em relação a todos os príncipes e os povos das províncias do rei Assuero.",
         17: "17.Porque a conduta da rainha será conhecida de todas as mulheres e as incitará a desprezar seus maridos. Dirão: ‘O rei Assuero mandou trazer à sua presença a rainha Vasti, mas ela não foi!’.",
