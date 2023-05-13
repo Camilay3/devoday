@@ -74,6 +74,7 @@ async function userIcon(vari, page, res) {
     } else if (page == 'card' || page == 'tutorial/tutoB' || page == 'tutorial/tutoC') {
 
         let dataCode = new Date();
+        dataCode.setTime(dataCode.getTime() - dataCode.getTimezoneOffset()*60000); // Trabalhando com fuso horário
         let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
         let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
         let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
