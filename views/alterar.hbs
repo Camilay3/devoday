@@ -26,7 +26,7 @@
         </div>
         <form class="boxShadow" action="/auth/alterar" method="POST">
 
-            <select name="altera" id="action" {{!-- onblur="mudou1(value)" --}}>
+            <select name="altera" id="act" {{!-- onblur="mudou1(value)" --}}>
                 <option value="outro" disabled selected>Selecione sua ação</option>
                 <option value="email">Alterar email</option>
                 <option value="senha">Alterar senha</option>
@@ -118,7 +118,7 @@
 
         <script src="/js/login.js"></script>
         <script>
-            let action = document.querySelectorAll('#action');
+            let act = document.querySelector('#act');
             let labels = document.querySelectorAll('.imagem label');
             let email = document.querySelector('.emailI');
             let senha = document.querySelector('.senhaI');
@@ -129,9 +129,9 @@
             let inputD = document.querySelector('input#delete');
             let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
             
-            action.addEventListener('change', function () {
+            act.addEventListener('change', function () {
                 imagem.innerText = "";
-                if (action.value == 'email') {
+                if (act.value == 'email') {
                     inputS.style.display = 'block';
                     inputD.style.display = 'none';
                     email.style.display = 'block';
@@ -140,7 +140,7 @@
                     aviso.style.display = 'none';
                     deletar.style.display = 'none';
 
-                } else if (action.value == 'senha') {
+                } else if (act.value == 'senha') {
                     inputS.style.display = 'block';
                     inputD.style.display = 'none';
                     email.style.display = 'none';
@@ -149,7 +149,7 @@
                     imagem.style.display = 'none';
                     deletar.style.display = 'none';
 
-                } else if (action.value == 'deletar') {
+                } else if (act.value == 'deletar') {
                     inputS.style.display = 'none';
                     inputD.style.display = 'block';
                     email.style.display = 'none';
@@ -158,7 +158,7 @@
                     aviso.style.display = 'block';
                     deletar.style.display = 'block';
 
-                } else if (action.value == 'imagem') {
+                } else if (act.value == 'imagem') {
                     inputS.style.display = 'block';
                     inputD.style.display = 'none';
                     email.style.display = 'none';
