@@ -230,6 +230,13 @@ exports.envio = async (req, res) => {
     const tutoToken = req.cookies["tuto-token"];
     var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
+    let dataCode = new Date();
+    dataCode.setTime(dataCode.getTime() - dataCode.getTimezoneOffset()*60000); // Trabalhando com fuso horário
+
+    let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
+    let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
+    let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
+
     if (titulo != undefined || titulo2.length > 0) {
         let usuarios = await prisma.users.findMany({select: {
                 id: true,
@@ -243,13 +250,6 @@ exports.envio = async (req, res) => {
         let cap = livro[1].split(':');
         let verINICIA = cap[1].split('-');
         let veF = verINICIA.length > 1? verINICIA[1] : verINICIA[0];
-        
-        let dataCode = new Date();
-        dataCode.setTime(dataCode.getTime() - dataCode.getTimezoneOffset()*60000); // Trabalhando com fuso horário
-
-        let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
-        let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
-        let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
         let cardsUserF = await prisma.cards.findMany({select: {
             id: true,
@@ -310,14 +310,32 @@ exports.envio = async (req, res) => {
         titulo = undefined
 
     } else {
-        res.render('card', {
-            err: "Para enviar é necessário definir uma leitura",
-            txts_old: antigo.livros,
-            selected: 1,
-            txts_new: novo.livros,
-            message: "Preencha os itens e salve para exibir o versículo",
-            tit: "Leitura"
-        })
+        for (let x = 1; x <= imagens.length; x++) {
+            if (usuarioCookie.ima == 0) {
+                return res.render('card', {
+                    txts_old: antigo.livros,
+                    selected: 1,
+                    txts_new: novo.livros,
+                    datadevo: data,
+                    err: "Para enviar é necessário definir uma leitura",
+                    message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso. Caso queira adquirir o físico: ",
+                    link: "https://avemaria.com.br/",
+                    tit: "Leitura"
+                })
+            } else if (usuarioCookie.ima == x) {
+                return res.render('card', {
+                    imagem: imagens[x-1],
+                    txts_old: antigo.livros,
+                    selected: 1,
+                    txts_new: novo.livros,
+                    datadevo: data,
+                    err: "Para enviar é necessário definir uma leitura",
+                    message: "Por favor, preencha os itens e salve para exibir o versículo antes de iniciar seu texto, se não perderá seu progresso. Caso queira adquirir o físico: ",
+                    link: "https://avemaria.com.br/",
+                    tit: "Leitura"
+                })
+            }
+        }
     }
 }
 

@@ -27,11 +27,11 @@ section {
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 20px;
-    height: 16%;
+    height: fit-content;
 }
 
 .left .res {
-    height: 80%;
+    height: 100%;
 }
 
 .left .res h1 {
@@ -132,11 +132,6 @@ section {
 @media screen and (max-width: 1143px) {
     .left form {
         flex-wrap: wrap;
-        height: 28%;
-    }
-
-    .left .res {
-        height: 76%;
     }
 }
 
@@ -151,54 +146,19 @@ section {
         width: 100%;
     }
 
-    .left form {
-        height: 16%;
-    }
-}
-
-@media screen and (max-width: 700px){
-    .left form {
-        height: 28%;
-    }
-
     .left {
         margin-bottom: 20px;
-    }
-}
-
-@media screen and (max-width: 500px){
-    .left {
-        height: 58%;
-        margin-bottom: 40px;
     }
 }
 
 @media screen and (max-width: 435px){
     section {
-        height: 125vh;
-    }
-
-    .left form {
-        height: 48%;
-    }
-
-    .left {
-        height: 50%;
-        margin-bottom: 0px;
-    }
-
-    .rigth {
-        height: 40%;
+        height: 100vh;
     }
 }
 
 @media screen and (max-width: 360px){
-    .left {
-        height: 45%;
-        margin-bottom: 20px;
-    }
-
-    .left form {
-        height: 52%;
+    section {
+        height: 120vh;
     }
 }
