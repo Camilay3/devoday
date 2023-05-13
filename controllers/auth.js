@@ -226,15 +226,10 @@ exports.alterar = async (req, res) => {
     const {emailEEmai, emailEemai, emailEsenha} = req.body;
     const {icone} = req.body;
 
-    const emailIemailant = emailIemailan.toLowerCase();
-    const emailIemail = emailIemai.toLowerCase();
-    const senhaIemail = senhaIemai.toLowerCase();
-    const deletarIemail = deletarIemai.toLowerCase();
-    const senhaEemail = senhaEemai.toLowerCase();
-    const emailEEmail = emailEEmai.toLowerCase();
-    const emailEemail = emailEemai.toLowerCase();
+    if (emailIemailan && emailIemai && emailIsenha) {
+        const emailIemailant = emailIemailan.toLowerCase();
+        const emailIemail = emailIemai.toLowerCase();
 
-    if (emailIemailant && emailIemail && emailIsenha) {
         let usuarios = await prisma.users.findMany({select: {
             senha: true
             }, where: {
@@ -279,7 +274,9 @@ exports.alterar = async (req, res) => {
             });
         }
 
-    } else if (senhaIemail && senhaIsenhaant && senhaIsenha) {
+    } else if (senhaIemai && senhaIsenhaant && senhaIsenha) {
+        const senhaIemail = senhaIemai.toLowerCase();
+
         let usuarios = await prisma.users.findMany({select: {
             senha: true
             }, where: {
@@ -308,7 +305,8 @@ exports.alterar = async (req, res) => {
             });
         }
 
-    } else if (deletarIemail && deletarIsenha) {
+    } else if (deletarIemai && deletarIsenha) {
+        const deletarIemail = deletarIemai.toLowerCase();
         let usuarios = await prisma.users.findMany({select: {
             email: true,
             senha: true
@@ -333,6 +331,7 @@ exports.alterar = async (req, res) => {
         }
 
     } else if (senhaEsenha) {
+        const senhaEemail = senhaEemai.toLowerCase();
         let usuarios = await prisma.users.findMany({select: {
             senha: true
             }, where: {
@@ -357,7 +356,10 @@ exports.alterar = async (req, res) => {
             });
         }
 
-    } else if (emailEEmail && emailEsenha) {
+    } else if (emailEEmai && emailEsenha) {
+        const emailEEmail = emailEEmai.toLowerCase();
+        const emailEemail = emailEemai.toLowerCase();
+
         let usuarios = await prisma.users.findMany({select: {
             senha: true,
             }, where: {
