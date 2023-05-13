@@ -62,15 +62,16 @@ textarea::-webkit-scrollbar-thumb {
     border-radius: 10px;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 1000px) {
     section {
-        width: 80%;
+        width: 90%;
     }
 }
 
 @media screen and (max-width: 440px) {
-    section {
-        width: 90%;
+    form {
+        height: 50vh;
+        margin-top: 20%;
     }
     .btn {
         width: 30%;

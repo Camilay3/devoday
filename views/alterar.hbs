@@ -127,7 +127,7 @@
             let deletar = document.querySelector('.deletarI');
             let inputS = document.querySelector('input.criar');
             let inputD = document.querySelector('input#delete');
-            let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
+            let imagens = ['cordeiro', 'pomba2', 'coelho', 'leao', 'coelho2', 'pomba'];
             
             act.addEventListener('change', function () {
                 imagem.innerText = "";
@@ -163,7 +163,7 @@
                     inputD.style.display = 'none';
                     email.style.display = 'none';
                     senha.style.display = 'none';
-                    imagem.style.display = 'block';
+                    imagem.style.display = 'flex';
                     aviso.style.display = 'none';
                     deletar.style.display = 'none';
 

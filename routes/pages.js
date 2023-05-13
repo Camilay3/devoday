@@ -88,7 +88,7 @@ router.get('/sugerido', async (req, res) => {
         let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
         let data2 = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
-        let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
+        let imagens = ['cordeiro', 'pomba2', 'coelho', 'leao', 'coelho2', 'pomba'];
 
         let cardsUser = await prisma.cards.findMany({select: {
             id: true,

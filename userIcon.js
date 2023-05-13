@@ -1,4 +1,4 @@
-let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
+let imagens = ['cordeiro', 'pomba2', 'coelho', 'leao', 'coelho2', 'pomba'];
 const antigo = require('./api/textosAntigo');
 const novo = require('./api/textosNovo');
 const { PrismaClient } = require('@prisma/client');

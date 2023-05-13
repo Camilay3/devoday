@@ -22,7 +22,9 @@
             </div>
             <div class="depois" style="display:none;">
                 <h1>Escolha seu perfil</h1>
-                <input type="radio" name="icone" id="radio0" checked value=0>
+                <div class="fts">
+                    <input type="radio" name="icone" id="radio0" checked value=0>
+                </div>
             </div>
         </div>
 
@@ -40,15 +42,18 @@
                 <script>
                     let antes = document.querySelector('.antes');
                     let depois = document.querySelector('.depois');
-                    let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
+                    let presentation = document.querySelector('.presentation');
+                    let fts = document.querySelector('.fts');
+                    let imagens = ['cordeiro', 'pomba2', 'coelho', 'leao', 'coelho2', 'pomba'];
 
                     function mostra() {
-                        let labels = document.querySelectorAll('.depois label');
+                        let labels = document.querySelectorAll('.fts label');
                         let emailinp = document.querySelector('.input #email')
 
                         if (emailinp.value.length > 1) {
                             antes.style.display = 'none';
                             depois.style.display = 'block';
+                            presentation.style.maxWidth = '50%';
                             
                             if (labels.length == 0) {
                                 for (let x = 1; x <= imagens.length; x++) {
@@ -67,8 +72,8 @@
                                     icone.id = 'i' + x;
 
                                     label.appendChild(icone);
-                                    depois.appendChild(input);
-                                    depois.appendChild(label);
+                                    fts.appendChild(input);
+                                    fts.appendChild(label);
                                 }
                             }
                         }

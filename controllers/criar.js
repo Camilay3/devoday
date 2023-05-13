@@ -18,7 +18,7 @@ let titulo;
 const { verify } = require('jsonwebtoken');
 const userIcon = require('../userIcon');
 
-let imagens = ['coelho', 'pomba2', 'cordeiro', 'leao', 'pomba', 'coelho2'];
+let imagens = ['cordeiro', 'pomba2', 'coelho', 'leao', 'coelho2', 'pomba'];
 
 // Escolher leitura
 exports.escolha = async (req, res) => {
