@@ -21,7 +21,7 @@
             <form action="/criar/resultado" method="POST" class="boxShadow form">
             <div class="label">
                 <label for="Livro">Livro</label>
-                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" onclick="mudou1(value)" required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
+                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" {{!-- onclick="mudou1(value)" --}} required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
                     <option selected disabled>Escolha o livro</option>
                     <optgroup label="Antigo Testamento">
                         {{#each txts_old as | livro |}}
@@ -79,7 +79,7 @@
 
                 let nomes; // recupera o livro escolhido na função mudou
 
-                function mudou1(valor) { //  MUDANDO LIVRO
+                livro.addEventListener('change', function () { //  MUDANDO LIVRO
                     // Limpar as options
                     var L = listaCap.options.length - 1;
 
@@ -114,7 +114,7 @@
                             return nomes = txts_new[a].nome
                         }
                     }
-                };
+                });
                 
                 function mudou2(valor) { // MUDANDO CAPÍTULO
                     // Limpar as options
