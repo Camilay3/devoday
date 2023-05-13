@@ -284,7 +284,7 @@ router.get('/trocar', (req, res) => {
         res.render('trocar')
     } else {
         var usuarioCookie = verify(accessToken, process.env.TOKEN);
-        userIcon(usuarioCookie, 'ialterar', res);
+        userIcon(usuarioCookie, 'alterar', res);
     }
 });
 

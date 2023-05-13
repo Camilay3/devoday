@@ -168,10 +168,10 @@ exports.login = async (req, res) => {
     })
 
     if (usuarios.length > 0) {
-
         if (!senha) { // Esqueci a senha
             enviarEmail(email, "Recuperar senha", "esqueci", {code: usuarios[0].token * 2})
             res.render('verificação', {
+                message: 'Digite o código para recuperar senha',
                 emailenv: email
             })
         }
@@ -244,33 +244,40 @@ exports.alterar = async (req, res) => {
             }
         })
 
-        if (emailIemailant == emailIemail) {
-            res.render('alterar', {
-                message: 'Não é possível alterar para o mesmo email'
-            });
-        } else if (usuariosNovo.length > 0) {
-            res.render('alterar', {
-                message: 'Não é possível alterar para um email pertencente a outra conta'
-            });
-        } else if (!await bcrypt.compare(emailIsenha, usuarios[0].senha)) {
-            res.render('alterar', {
-                message: 'Senha incorreta'
-            });
+        if (usuarios.length > 0) {
+            if (emailIemailant == emailIemail) {
+                res.render('alterar', {
+                    message: 'Não é possível alterar para o mesmo email'
+                });
+            } else if (usuariosNovo.length > 0) {
+                res.render('alterar', {
+                    message: 'Não é possível alterar para um email pertencente a outra conta'
+                });
+            } else if (!await bcrypt.compare(emailIsenha, usuarios[0].senha)) {
+                res.render('alterar', {
+                    message: 'Senha incorreta'
+                });
+            } else {
+                let code = Math.floor((Math.random() * (9999-1111)) +1111);
+                await prisma.users.update({where: { 
+                    email: emailIemailant 
+                    }, data: { 
+                        verify: 0,
+                        token: code,
+                        email: emailIemail,
+                    }
+                })
+                enviarEmail([emailIemailant, emailIemail], 'Verificação de novo email', 'reverificação', {code: code})
+                res.clearCookie('access-token')
+                res.render('verificação', {
+                    message: 'Verifique seu novo email',
+                    emailenv: emailIemail
+                });
+            }
+
         } else {
-            let code = Math.floor((Math.random() * (9999-1111)) +1111);
-            await prisma.users.update({where: { 
-                email: emailIemailant 
-                }, data: { 
-                    verify: 0,
-                    token: code,
-                    email: emailIemail,
-                }
-            })
-            enviarEmail([emailIemailant, emailIemail], 'Verificação de novo email', 'reverificação', {code: code})
-            res.clearCookie('access-token')
-            res.render('verificação', {
-                message: 'Verifique seu novo email',
-                emailenv: emailIemail
+            res.render('alterar', {
+                message: 'O email antigo não existe'
             });
         }
 
