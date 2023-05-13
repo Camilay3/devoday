@@ -89,7 +89,7 @@
 
                     // Rodar a função
                     for (a = 0; a < txts_old.length; a++){ // Verifica no antigo testamento
-                        if (txts_old[a].nome == valor){ // Procura o livro
+                        if (txts_old[a].nome == livro.value){ // Procura o livro
                             for (z = 1; z <= txts_old[a].capitulos; z++) { // Lista os capítulos
                                 let option = document.createElement('option');
                                 option.value = z;
@@ -102,7 +102,7 @@
                         }
                     }
                     for (a = 0; a < txts_new.length; a++){ // Verifica no antigo testamento
-                        if (txts_new[a].nome == valor){ // Procura o livro
+                        if (txts_new[a].nome == livro.value){ // Procura o livro
                             for (z = 1; z <= txts_new[a].capitulos; z++) { // Lista os capítulos
                                 let option = document.createElement('option');
                                 option.value = z;
