@@ -21,7 +21,7 @@
             <form action="/criar/resultado" method="POST" class="boxShadow form">
             <div class="label">
                 <label for="Livro">Livro</label>
-                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" {{!-- onclick="mudou1(value)" --}} required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
+                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
                     <option selected disabled>Escolha o livro</option>
                     <optgroup label="Antigo Testamento">
                         {{#each txts_old as | livro |}}
@@ -51,7 +51,7 @@
 
             <div class="label">
                 <label for="Capítulo">Capítulo</label>
-                <select class="form-select" aria-label="Default select example" id="Capítulo" name="capitulo" onblur="mudou2(value)" required>
+                <select class="form-select" aria-label="Default select example" id="Capítulo" name="capitulo" required>
                     <option selected disabled>Escolha o capítulo</option>
                 </select>
             </div>
@@ -116,22 +116,20 @@
                     }
                 });
                 
-                function mudou2(valor) { // MUDANDO CAPÍTULO
-                    // Limpar as options
-                    var M = listaVerI.options.length - 1;
+                listaCap.addEventListener('change', function () { // MUDANDO CAPÍTULO
+                    var M = listaVerI.options.length - 1; // Limpar as options
                     var N = listaVerF.options.length - 1;
 
                     for (var i = M; i >= 0; i--) {
                         listaVerI.remove(i)
-                    }
-                    for (var i = N; i >= 0; i--) {
+                    } for (var i = N; i >= 0; i--) {
                         listaVerF.remove(i)
                     }
 
                     // Rodar a função
                     for (a = 0; a < txts_old.length; a++){ // Verifica no antigo testamento
                         if (txts_old[a].nome == nomes){ // Procura o livro
-                            for (z = 1; z <= txts_old[a].leitura[valor]["versi"]; z++) { // Lista os versículos
+                            for (z = 1; z <= txts_old[a].leitura[listaCap.value]["versi"]; z++) { // Lista os versículos
                                 let option = document.createElement('option');
                                 option.value = z;
                                 let conteudo = document.createTextNode(z);
@@ -139,7 +137,7 @@
 
                                 listaVerI.appendChild(option.cloneNode(true))
                                 listaVerF.appendChild(option)
-                                if (txts_old[a].leitura[valor]["versi"] == z) {
+                                if (txts_old[a].leitura[listaCap.value]["versi"] == z) {
                                     option.selected = true
                                 }
                             }
@@ -147,7 +145,7 @@
                     }
                     for (a = 0; a < txts_new.length; a++){ // Verifica no antigo testamento
                         if (txts_new[a].nome == nomes){ // Procura o livro
-                            for (z = 1; z <= txts_new[a].leitura[valor]["versi"]; z++) { // Lista os versículos
+                            for (z = 1; z <= txts_new[a].leitura[listaCap.value]["versi"]; z++) { // Lista os versículos
                                 let option = document.createElement('option');
                                 option.value = z;
                                 let conteudo = document.createTextNode(z);
@@ -155,13 +153,13 @@
 
                                 listaVerI.appendChild(option.cloneNode(true))
                                 listaVerF.appendChild(option)
-                                if (txts_new[a].leitura[valor]["versi"] == z) {
+                                if (txts_new[a].leitura[listaCap.value]["versi"] == z) {
                                     option.selected = true
                                 }
                             }
                         }
                     }
-                }
+                });
             </script>
 
             <div class="boxShadow res">
