@@ -118,8 +118,7 @@ const verifyTimeLeft = async () => {
   const lastUpdate = new Date(db[0].lastupdate);
   const nowFullHour = new Date();
 
-  let dif = (nowFullHour.getTimezoneOffset() / 60) * (-1); // Fuso horário
-  const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), dif, 0, 0, 0);
+  const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), -3, 0, 0, 0);
 
   const timeDiff = Math.abs(now.getTime() - lastUpdate.getTime());
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));

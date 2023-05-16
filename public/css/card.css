@@ -1,4 +1,8 @@
 /* BODY */
+body {
+    padding-bottom: 10px;
+}
+
 section {
     display: flex;
     flex-direction: row;

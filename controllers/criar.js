@@ -102,12 +102,16 @@ exports.escolha = async (req, res) => {
 
 
     let mensi;
+    let diaC;
     let dataCode = new Date();
-    dataCode.setTime(dataCode.getTime() - dataCode.getTimezoneOffset()*60000); // Trabalhando com fuso horário
+    if (dataCode.getHours() >= 0 && dataCode.getHours() <= 3) { // Se for mais de 21h
+        diaC = dataCode.getDate()-1 < 10 ? `0${dataCode.getDate()-1}` : dataCode.getDate()-1;
 
-    let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
-    let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
-    let data2 = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
+    } else {
+        diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate();
+    }
+    let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1;
+    let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
     if (cardsUser.length > 0) {
         for (let a = 0; a < antigo.livros.length; a++) {
@@ -230,11 +234,15 @@ exports.envio = async (req, res) => {
     const tutoToken = req.cookies["tuto-token"];
     var usuarioCookie = verify(accessToken, process.env.TOKEN);
 
+    let diaC;
     let dataCode = new Date();
-    dataCode.setTime(dataCode.getTime() - dataCode.getTimezoneOffset()*60000); // Trabalhando com fuso horário
+    if (dataCode.getHours() >= 0 && dataCode.getHours() <= 3) { // Se for mais de 21h
+        diaC = dataCode.getDate()-1 < 10 ? `0${dataCode.getDate()-1}` : dataCode.getDate()-1;
 
-    let diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate()
-    let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1
+    } else {
+        diaC = dataCode.getDate() < 10 ? `0${dataCode.getDate()}` : dataCode.getDate();
+    }
+    let mesC = dataCode.getMonth()+1 < 10 ? `0${dataCode.getMonth()+1}` : dataCode.getMonth()+1;
     let data = `${diaC}.${mesC}.${dataCode.getFullYear()-2000}`;
 
     if (titulo != undefined || titulo2.length > 0) {
