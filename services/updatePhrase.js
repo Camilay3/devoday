@@ -39,11 +39,14 @@ const getPhrase = async () => {
     cap = cap == 0 ? 1 : cap;
     versI = versI == 0 ? 1 : versI;
     versF = versF < versI ? versI : versF;
-    if (versF == versI) {
+    if (versF == versI || (versF - versI) < 5) {
       if ((versF + 5) < antigo.livros[liv].leitura[cap]["versi"]) {
         versF += 5
       } else {
         versF = antigo.livros[liv].leitura[cap]["versi"];
+        if ((versF - versI) < 5) {
+          versI = (versI - 5) >= 1 ? versI-5 : 1;
+        }
       }
     }
     if (cap > antigo.livros[liv].capitulos) {
@@ -76,11 +79,14 @@ const getPhrase = async () => {
     cap = cap == 0 ? 1 : cap;
     versI = versI == 0 ? 1 : versI;
     versF = versF < versI ? versI : versF;
-    if (versF == versI) {
+    if (versF == versI || (versF - versI) < 5) {
       if ((versF + 5) < novo.livros[liv].leitura[cap]["versi"]) {
         versF += 5
       } else {
         versF = novo.livros[liv].leitura[cap]["versi"];
+        if ((versF - versI) < 5) {
+          versI = (versI - 5) >= 1 ? versI-5 : 1;
+        }
       }
     }
     let titulo = versF == versI ? `${novo.livros[liv].abr}_${cap}:${versI}` : `${novo.livros[liv].abr}_${cap}:${versI}-${versF}`;
