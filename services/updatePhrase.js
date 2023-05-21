@@ -123,8 +123,14 @@ const verifyTimeLeft = async () => {
   }});
   const lastUpdate = new Date(db[0].lastupdate);
   const nowFullHour = new Date();
+  let now;
 
-  const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), -3, 0, 0, 0);
+  if (nowFullHour.getHours() >= 0 && nowFullHour.getHours() <= 3) { // Se for mais de 21h
+    now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate()-1, -3, 0, 0, 0);
+
+  } else {
+    now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), -3, 0, 0, 0);
+  }
 
   const timeDiff = Math.abs(now.getTime() - lastUpdate.getTime());
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
