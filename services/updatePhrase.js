@@ -124,7 +124,7 @@ const verifyTimeLeft = async () => {
   const lastUpdate = new Date(db[0].lastupdate);
   const nowFullHour = new Date();
 
-  const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), 0, 0, 0, 0);
+  const now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), -3, 0, 0, 0);
 
   const timeDiff = Math.abs(now.getTime() - lastUpdate.getTime());
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
