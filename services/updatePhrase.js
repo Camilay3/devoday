@@ -14,7 +14,7 @@ const getPhrase = async () => {
     }
   });
 
-  let sug1 = db[0].titulo;
+  let sug1 = (db.length && db[0].titulo) ? db[0].titulo : '';
   let sug2 = sug1.split('_');
 
   let variTest = Math.floor(Math.random() * 2); // Escolhe qual das duas variáveis usar
@@ -128,14 +128,12 @@ const verifyTimeLeft = async () => {
   });
   const nowFullHour = new Date();
   let now;
-  
-  if (!db.length) {
-    console.log("Nenhuma frase encontrada no banco.");
 
+  if (!db.length) { //Nenhuma frase encontrada no banco
     let valores = await getPhrase();
     await prisma.frases.create({
       data: {
-        lastupdate: new Date(now).toISOString(),
+        lastupdate: nowFullHour.toISOString(),
         titulo: valores.tit,
         text: valores.text
       }
