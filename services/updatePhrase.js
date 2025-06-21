@@ -6,11 +6,13 @@ const getPhrase = async () => {
   const antigo = require('../api/textosAntigo');
   const novo = require('../api/textosNovo');
 
-  let db = await prisma.frases.findMany({select: {
-    lastupdate: true,
-    titulo: true,
-    text: true
-  }});
+  let db = await prisma.frases.findMany({
+    select: {
+      lastupdate: true,
+      titulo: true,
+      text: true
+    }
+  });
 
   let sug1 = db[0].titulo;
   let sug2 = sug1.split('_');
@@ -25,7 +27,7 @@ const getPhrase = async () => {
     liv = Math.floor(Math.random() * antigo.livros.length) // Escolhe o livro
 
     if (antigo.livros[liv].abr == sug2[0]) { // Não permite que o livro seja o mesmo do dia anterior
-      if (liv+1 < antigo.livros.length) {
+      if (liv + 1 < antigo.livros.length) {
         liv += 1
       } else {
         liv = 0
@@ -45,14 +47,14 @@ const getPhrase = async () => {
       } else {
         versF = antigo.livros[liv].leitura[cap]["versi"];
         if ((versF - versI) < 5) {
-          versI = (versI - 5) >= 1 ? versI-5 : 1;
+          versI = (versI - 5) >= 1 ? versI - 5 : 1;
         }
       }
     }
     if (cap > antigo.livros[liv].capitulos) {
       cap = antigo.livros[liv].capitulos
     } else if (versF > antigo.livros[liv].leitura[cap]["versi"]) {
-        versF = antigo.livros[liv].leitura[cap]["versi"];
+      versF = antigo.livros[liv].leitura[cap]["versi"];
     }
     let titulo = versF == versI ? `${antigo.livros[liv].abr}_${cap}:${versI}` : `${antigo.livros[liv].abr}_${cap}:${versI}-${versF}`;
 
@@ -65,7 +67,7 @@ const getPhrase = async () => {
     liv = Math.floor(Math.random() * novo.livros.length) // Escolhe o livro
 
     if (novo.livros[liv].abr == sug2[0]) { // Não permite que o livro seja o mesmo do dia anterior
-      if (liv+1 < novo.livros.length) {
+      if (liv + 1 < novo.livros.length) {
         liv += 1
       } else {
         liv = 0
@@ -85,7 +87,7 @@ const getPhrase = async () => {
       } else {
         versF = novo.livros[liv].leitura[cap]["versi"];
         if ((versF - versI) < 5) {
-          versI = (versI - 5) >= 1 ? versI-5 : 1;
+          versI = (versI - 5) >= 1 ? versI - 5 : 1;
         }
       }
     }
@@ -93,7 +95,7 @@ const getPhrase = async () => {
     if (cap > novo.livros[liv].capitulos) {
       cap = novo.livros[liv].capitulos
     } else if (versF > novo.livros[liv].leitura[cap]["versi"]) {
-        versF = novo.livros[liv].leitura[cap]["versi"];
+      versF = novo.livros[liv].leitura[cap]["versi"];
     }
 
     return {
@@ -105,28 +107,46 @@ const getPhrase = async () => {
 
 const updatePhrase = async (datas) => {
   let valores = await getPhrase();
-  await prisma.frases.update({where: { 
-      id: 1 
-    }, data: { 
-        lastupdate: new Date(datas).toISOString(),
-        titulo: valores.tit,
-        text: valores.text
+  await prisma.frases.update({
+    where: {
+      id: 1
+    }, data: {
+      lastupdate: new Date(datas).toISOString(),
+      titulo: valores.tit,
+      text: valores.text
     }
   });
 };
 
 const verifyTimeLeft = async () => {
-  let db = await prisma.frases.findMany({select: {
-    lastupdate: true,
-    titulo: true,
-    text: true
-  }});
-  const lastUpdate = new Date(db[0].lastupdate);
+  let db = await prisma.frases.findMany({
+    select: {
+      lastupdate: true,
+      titulo: true,
+      text: true
+    }
+  });
   const nowFullHour = new Date();
   let now;
+  
+  if (!db.length) {
+    console.log("Nenhuma frase encontrada no banco.");
+
+    let valores = await getPhrase();
+    await prisma.frases.create({
+      data: {
+        lastupdate: new Date(now).toISOString(),
+        titulo: valores.tit,
+        text: valores.text
+      }
+    });
+    return;
+  }
+
+  const lastUpdate = new Date(db[0].lastupdate);
 
   if (nowFullHour.getHours() >= 0 && nowFullHour.getHours() <= 3) { // Se for mais de 21h
-    now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate()-1, -3, 0, 0, 0);
+    now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate() - 1, -3, 0, 0, 0);
 
   } else {
     now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), -3, 0, 0, 0);
@@ -141,6 +161,6 @@ const verifyTimeLeft = async () => {
 verifyTimeLeft();
 
 // Verifica a cada hora
-setInterval(() => verifyTimeLeft(), 
-// @param ms - s - m - h
-1000 * 60 * 60);
+setInterval(() => verifyTimeLeft(),
+  // @param ms - s - m - h
+  1000 * 60 * 60);
