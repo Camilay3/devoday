@@ -1,12 +1,21 @@
-const fs = require("fs");
-const localDbPath = `${__dirname}/../localdb.json`;
-let dbContent = fs.readFileSync(localDbPath, "utf8");
-let db = JSON.parse(dbContent);
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const getPhrase = () => {
-  const fun = require('../bibliaAPI/class');
-  const antigo = require('../bibliaAPI/textosAntigo');
-  const novo = require('../bibliaAPI/textosNovo');
+const getPhrase = async () => {
+  const fun = require('../api/class');
+  const antigo = require('../api/textosAntigo');
+  const novo = require('../api/textosNovo');
+
+  let db = await prisma.frases.findMany({
+    select: {
+      lastupdate: true,
+      titulo: true,
+      text: true
+    }
+  });
+
+  let sug1 = (db.length && db[0].titulo) ? db[0].titulo : '';
+  let sug2 = sug1.split('_');
 
   let variTest = Math.floor(Math.random() * 2); // Escolhe qual das duas variáveis usar
   let liv;
@@ -16,6 +25,15 @@ const getPhrase = () => {
 
   if (variTest == 0) {
     liv = Math.floor(Math.random() * antigo.livros.length) // Escolhe o livro
+
+    if (antigo.livros[liv].abr == sug2[0]) { // Não permite que o livro seja o mesmo do dia anterior
+      if (liv + 1 < antigo.livros.length) {
+        liv += 1
+      } else {
+        liv = 0
+      }
+    }
+
     cap = Math.floor(Math.random() * (antigo.livros[liv].capitulos - 1) + 1) // Escolhe o capítulo
     versI = Math.floor(Math.random() * (antigo.livros[liv].leitura[cap]["versi"] - 1) + 1) // Escolhe o versículo
     versF = Math.floor(Math.random() * (antigo.livros[liv].leitura[cap]["versi"] - versI) + versI); // Escolhe o versículo
@@ -23,15 +41,20 @@ const getPhrase = () => {
     cap = cap == 0 ? 1 : cap;
     versI = versI == 0 ? 1 : versI;
     versF = versF < versI ? versI : versF;
-    if (versF == versI) {
+    if (versF == versI || (versF - versI) < 5) {
       if ((versF + 5) < antigo.livros[liv].leitura[cap]["versi"]) {
         versF += 5
+      } else {
+        versF = antigo.livros[liv].leitura[cap]["versi"];
+        if ((versF - versI) < 5) {
+          versI = (versI - 5) >= 1 ? versI - 5 : 1;
+        }
       }
     }
     if (cap > antigo.livros[liv].capitulos) {
       cap = antigo.livros[liv].capitulos
     } else if (versF > antigo.livros[liv].leitura[cap]["versi"]) {
-        versF = antigo.livros[liv].leitura[cap]["versi"];
+      versF = antigo.livros[liv].leitura[cap]["versi"];
     }
     let titulo = versF == versI ? `${antigo.livros[liv].abr}_${cap}:${versI}` : `${antigo.livros[liv].abr}_${cap}:${versI}-${versF}`;
 
@@ -42,6 +65,15 @@ const getPhrase = () => {
 
   } else {
     liv = Math.floor(Math.random() * novo.livros.length) // Escolhe o livro
+
+    if (novo.livros[liv].abr == sug2[0]) { // Não permite que o livro seja o mesmo do dia anterior
+      if (liv + 1 < novo.livros.length) {
+        liv += 1
+      } else {
+        liv = 0
+      }
+    }
+
     cap = Math.floor(Math.random() * (novo.livros[liv].capitulos - 1) + 1) // Escolhe o capítulo
     versI = Math.floor(Math.random() * (novo.livros[liv].leitura[cap]["versi"] - 1) + 1) // Escolhe o versículo
     versF = Math.floor(Math.random() * (novo.livros[liv].leitura[cap]["versi"] - versI) + versI); // Escolhe o versículo
@@ -49,16 +81,21 @@ const getPhrase = () => {
     cap = cap == 0 ? 1 : cap;
     versI = versI == 0 ? 1 : versI;
     versF = versF < versI ? versI : versF;
-    if (versF == versI) {
+    if (versF == versI || (versF - versI) < 5) {
       if ((versF + 5) < novo.livros[liv].leitura[cap]["versi"]) {
         versF += 5
+      } else {
+        versF = novo.livros[liv].leitura[cap]["versi"];
+        if ((versF - versI) < 5) {
+          versI = (versI - 5) >= 1 ? versI - 5 : 1;
+        }
       }
     }
     let titulo = versF == versI ? `${novo.livros[liv].abr}_${cap}:${versI}` : `${novo.livros[liv].abr}_${cap}:${versI}-${versF}`;
     if (cap > novo.livros[liv].capitulos) {
       cap = novo.livros[liv].capitulos
     } else if (versF > novo.livros[liv].leitura[cap]["versi"]) {
-        versF = novo.livros[liv].leitura[cap]["versi"];
+      versF = novo.livros[liv].leitura[cap]["versi"];
     }
 
     return {
@@ -68,25 +105,60 @@ const getPhrase = () => {
   }
 };
 
-const updatePhrase = () => {
-  const data = JSON.parse(fs.readFileSync("localdb.json", "utf8"));
-  let valores = getPhrase();
-  data.phrase.titulo = valores.tit
-  data.phrase.text = valores.text;
-  data.phrase.lastUpdate = new Date().toISOString();
-  fs.writeFileSync(`${__dirname}/../localdb.json`, JSON.stringify(data));
+const updatePhrase = async (datas) => {
+  let valores = await getPhrase();
+  await prisma.frases.update({
+    where: {
+      id: 1
+    }, data: {
+      lastupdate: new Date(datas).toISOString(),
+      titulo: valores.tit,
+      text: valores.text
+    }
+  });
 };
 
-const verifyTimeLeft = () => {
-  const lastUpdate = new Date(db.phrase.lastUpdate);
-  const now = new Date();
+const verifyTimeLeft = async () => {
+  let db = await prisma.frases.findMany({
+    select: {
+      lastupdate: true,
+      titulo: true,
+      text: true
+    }
+  });
+  const nowFullHour = new Date();
+  let now;
+
+  if (!db.length) { //Nenhuma frase encontrada no banco
+    let valores = await getPhrase();
+    await prisma.frases.create({
+      data: {
+        lastupdate: nowFullHour.toISOString(),
+        titulo: valores.tit,
+        text: valores.text
+      }
+    });
+    return;
+  }
+
+  const lastUpdate = new Date(db[0].lastupdate);
+
+  if (nowFullHour.getHours() >= 0 && nowFullHour.getHours() <= 3) { // Se for mais de 21h
+    now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate() - 1, -3, 0, 0, 0);
+
+  } else {
+    now = new Date(nowFullHour.getFullYear(), nowFullHour.getMonth(), nowFullHour.getDate(), -3, 0, 0, 0);
+  }
+
   const timeDiff = Math.abs(now.getTime() - lastUpdate.getTime());
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
   if (hoursDiff >= 24) {
-    updatePhrase();
+    updatePhrase(now);
   }
 };
+verifyTimeLeft();
+
 // Verifica a cada hora
-setInterval(() => verifyTimeLeft(), 
-// @param ms - s - m - h
-1000 * 60 * 60);
+setInterval(() => verifyTimeLeft(),
+  // @param ms - s - m - h
+  1000 * 60 * 60);

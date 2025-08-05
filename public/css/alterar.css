@@ -6,8 +6,8 @@ body {
 
 form.boxShadow {
     width: 80%;
-    height: 80vh;
-    padding: 15px !important;
+    min-height: 55vh;
+    padding: 25px !important;
 }
 
 .boxShadow {
@@ -19,7 +19,7 @@ form.boxShadow {
 
 div.boxShadow {
     width: 90%;
-    min-height: 65%;
+    height: fit-content;
     padding: 20px;
     display: flex;
     font-size: 1.2em;
@@ -56,6 +56,7 @@ div.boxShadow input, .input {
 div.boxShadow input {
     margin-right: auto;
     font-size: 1.2em;
+    width: 100%;
 }
 
 .input {
@@ -91,19 +92,18 @@ input.btn {
 }
 
 /* IMGS */
-.imagem {
+.imagemI {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 
-    max-width: 70%;
+    max-width: 80%;
 }
 
 .i {
     border-radius: 50%;
     border: 3px solid var(--color03);
-    margin: 10px !important;
     width: 100px;
     height: 100px;
     cursor: pointer;
@@ -120,23 +120,113 @@ input[type="radio"]:checked + label img {
     box-shadow: 0px 0px 1px 1px #5d5d5d1a;
 }
 
+/* POP UP */ 
+.cont {
+    position: fixed;
+    background-color: #00000066;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    padding-top: 30px;
+    top: 0;
+    left: 0;
+}
+
+.cont .sair {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+}
+
+.cont img {
+    position: absolute;
+    z-index: 1000;
+    left: 10px;
+    bottom: 0;
+    height: 300px;
+}
+
+.txts {
+    max-width: 45%;
+    z-index: 1000;
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.text {
+    background-color: white;
+    color: var(--color01);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+    min-height: 30%;
+}
+
+.text p {
+    color: black !important;
+    margin: 10px 0;
+}
+
+.txt h1 {
+    text-align: center;
+}
+
+p {
+    overflow-y: auto;
+}
+
+p::-webkit-scrollbar, .txts::-webkit-scrollbar {
+    width: 6px;
+    background-image: var(--color04);
+}
+
+p::-webkit-scrollbar-thumb, .txts::-webkit-scrollbar-thumb {
+    background-color: var(--color03);
+    border-radius: 10px;
+}
+
 @media screen and (max-width: 840px) {
     form input.btn {
         width: 70%;
     }
 }
 
+@media screen and (max-width: 800px) {
+    .txts {
+        max-width: 70%;
+    }
+
+    .text {
+        min-height: 40%;
+        max-height: 60%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .cont {
+        flex-wrap: wrap-reverse;
+    }
+}
+
 @media screen and (max-width: 600px) {
     .i {
         border: 2px solid var(--color03);
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
     }
     
+    .imagemI {
+        max-width: 90%;
+    }
+
     input[type="radio"]:checked + label img {
         border: 3px solid var(--color03);
-        width: 51px;
-        height: 51px;
+        width: 61px;
+        height: 61px;
     }
 }
 
@@ -145,11 +235,30 @@ input[type="radio"]:checked + label img {
         display: none;
     }
 
+    form.boxShadow {
+        width: 90%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    div.boxShadow {
+        width: 100%;
+    }
+
     form .input {
         background-color: transparent;
     }
 
     p.alert, div.boxShadow {
         font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 445px){
+    .txts {
+        max-width: 100%;
+    }
+
+    .cont img {
+        height: 260px;
     }
 }

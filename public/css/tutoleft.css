@@ -30,7 +30,9 @@
 .txts {
     max-width: 45%;
     z-index: 1000;
+    max-height: 90%;
     margin-bottom: 150px;
+    overflow-y: auto;
 }
 
 .text {
@@ -38,10 +40,12 @@
     padding: 20px;
     border-radius: 5px;
     margin: 20px;
-    min-height: 30%;
-    max-height: 30%;
-    
+    height: 30%;
+}
+
+p {
     overflow-y: auto;
+    max-height: 98%;
 }
 
 .txt h1 {

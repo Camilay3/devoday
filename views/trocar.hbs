@@ -11,12 +11,14 @@
         <title>Trocar email</title>
     </head>
     <body>
+        {{> preloader }}
+        
         <form class="boxShadow" action="/auth/alterar" method="POST">
             <div class="emailE boxShadow">
                 <div class="topic">
                     <label for="emailEemail">Email</label>
                     <div class="input">
-                        <input type="email" name="emailEemail" id="emailEemail" placeholder="Insira seu email">
+                        <input type="email" name="emailEemai" id="emailEemail" placeholder="Insira seu email">
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>
@@ -24,7 +26,7 @@
                 <div class="topic">
                     <label for="emailEemail">Email novo</label>
                     <div class="input">
-                        <input type="email" name="emailEEmail" id="emailEEmail" placeholder="Insira seu novo email">
+                        <input type="email" name="emailEEmai" id="emailEEmail" placeholder="Insira seu novo email">
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>

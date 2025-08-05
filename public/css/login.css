@@ -6,7 +6,8 @@ body {
 
 .boxShadow {
     width: 60%;
-    min-height: 75vh;
+    height: max-content;
+    padding: 40px;
 
     display: flex;
     flex-direction: row;
@@ -21,31 +22,31 @@ body {
 .presentation {
     align-items: center;
     justify-content: center;
-    margin: auto;
-    transform: scale(1.7);
     padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.depois {
+.fts {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: center;
-
-    max-width: 70%;
+    justify-content: space-around;
+    margin: auto;
+    max-width: 80%;
 }
 
 .depois h1 {
     color: var(--color03);
-    text-shadow: 1px 1px 0px #8EF8FF40;
+    text-shadow: 1px 1px 0px #57595940;
 }
 
 .i {
     border-radius: 50%;
     border: 2px solid var(--color03);
     margin: 10px !important;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     cursor: pointer;
 }
 
@@ -55,8 +56,8 @@ input[type="radio"] {
 
 input[type="radio"]:checked + label img {
     border: 3px solid var(--color03);
-    width: 51px;
-    height: 51px;
+    width: 71px;
+    height: 71px;
     box-shadow: 0px 0px 1px 1px #5d5d5d1a;
 }
 
@@ -107,6 +108,7 @@ label {
 .box input {
     margin-right: auto;
     font-size: 1.2em;
+    width: 100%;
 }
 
 .input {
@@ -162,18 +164,12 @@ input.criar {
 }
 
 @media screen and (max-width: 1250px) {
-    .presentation {
-        transform: scale(1);
-    }
     .box-blue h1 {
         font-size: 1.8em;
     }
 }
 
 @media screen and (max-width: 1150px) {
-    body {
-        min-height: 150vh;
-    }
     .boxShadow {
         width: 70%;
         flex-direction: column;
@@ -185,8 +181,10 @@ input.criar {
     .presentation {
         align-items: center;
         justify-content: center;
-        transform: scale(1.5);
-        margin-bottom: 100px;
+        margin-bottom: 20px;
+        margin-top: -40px;
+        padding-right: 0px;
+        max-width: 90% !important;
     }
     .box-blue {
         width: 100%;
@@ -226,8 +224,18 @@ input.criar {
     .box-blue .input {
         background-color: transparent;
     }
+}
 
-    .presentation {
-        transform: scale(1);
+@media screen and (max-width: 370px) {
+    .i {
+        border: 2px solid var(--color03);
+        width: 50px;
+        height: 50px;
+    }
+
+    input[type="radio"]:checked + label img {
+        border: 3px solid var(--color03);
+        width: 51px;
+        height: 51px;
     }
 }

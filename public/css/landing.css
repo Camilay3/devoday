@@ -80,6 +80,12 @@ section img {
 /* ABOUT */
 .cem {
     height: 100vh;
+    position: relative;
+}
+
+.cem, .sobre {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .cem svg {
@@ -88,15 +94,15 @@ section img {
 }
 
 .sobre {
-    margin-top: -10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 1.5em;
+    z-index: 1;
 }
 
 .sobre h2 {
-    margin: 10px;
+    margin: 20px;
     font-family: var(--fonteprincipal);
 }
 
@@ -119,6 +125,8 @@ footer {
     padding: 10px;
     background-color: var(--color04);
     bottom: 0;
+    width: 100%;
+    margin-top: 40px;
 }
 
 footer p, footer a {
@@ -135,6 +143,10 @@ footer p, footer a {
     .checks {
         flex-wrap: wrap;
     }
+
+    .cem {
+        height: 90vh;
+    }
 }
 
 @media screen and (max-width: 390px){
@@ -144,9 +156,16 @@ footer p, footer a {
 
     section {
         font-size: 3em;
+        text-shadow: 2px 1px 1px #00000021;
     }
 
     section h2 {
         margin-top: -40px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .head {
+        font-size: 0.5em;
     }
 }

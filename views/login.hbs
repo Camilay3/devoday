@@ -11,6 +11,8 @@
     <title>Login</title>
 </head>
 <body>
+    {{> preloader }}
+    
     <form class="boxShadow" action="/auth/login" method="POST">
         <div class="presentation">
             <img src="/imgs/pessoas.svg" alt="pessoas">
@@ -24,7 +26,7 @@
                 <div class="topic">
                     <label for="email">Email</label>
                     <div class="input">
-                        <input type="email" name="email" id="email" placeholder="Insira seu email" required>
+                        <input type="email" name="emai" id="email" placeholder="Insira seu email" required>
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>
@@ -45,7 +47,7 @@
             </div>
 
             <input type="submit" class="btn criar" value="Login">
-            <a href="cadastro" class="btn criar">Criar conta</a>
+            <a href="../cadastro" class="btn criar">Criar conta</a>
         </div>
     </form>
     <script src="/js/login.js"></script>

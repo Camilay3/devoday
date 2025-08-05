@@ -14,6 +14,8 @@
     <title>Criar card</title>
 </head>
 <body>
+    {{> preloader }}
+
     <div class="cont">
         <a href="/" class="sair">Sair do tutorial</a>
         <img src="/imgs/felizAB.png" alt="guia">
@@ -26,14 +28,14 @@
             </div>
         </div>
     </div>
-    {{> header}}
-
+    
+    {{> header }}
     <section>
         <div class="left">
             <form action="/criar/resultado" method="POST" class="boxShadow form marcado">
             <div class="label">
                 <label for="Livro">Livro</label>
-                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" onclick="mudou1(value)" required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
+                <select class="form-select" aria-label="Default select example" id="Livro" name="livro" required> {{!-- quando o usuário clicar fora da seleção a função será executada --}}
                     <option selected disabled>Escolha o livro</option>
                     <optgroup label="Antigo Testamento">
                         {{#each txts_old as | livro |}}
@@ -63,7 +65,7 @@
 
             <div class="label">
                 <label for="Capítulo">Capítulo</label>
-                <select class="form-select" aria-label="Default select example" id="Capítulo" name="capitulo" onclick="mudou2(value)" required>
+                <select class="form-select" aria-label="Default select example" id="Capítulo" name="capitulo" required>
                     <option selected disabled>Escolha o capítulo</option>
                 </select>
             </div>
@@ -91,7 +93,7 @@
 
                 let nomes; // recupera o livro escolhido na função mudou
 
-                function mudou1(valor) { //  MUDANDO LIVRO
+                livro.addEventListener('change', function () { //  MUDANDO LIVRO
                     // Limpar as options
                     var L = listaCap.options.length - 1;
 
@@ -101,7 +103,7 @@
 
                     // Rodar a função
                     for (a = 0; a < txts_old.length; a++){ // Verifica no antigo testamento
-                        if (txts_old[a].nome == valor){ // Procura o livro
+                        if (txts_old[a].nome == livro.value){ // Procura o livro
                             for (z = 1; z <= txts_old[a].capitulos; z++) { // Lista os capítulos
                                 let option = document.createElement('option');
                                 option.value = z;
@@ -114,7 +116,7 @@
                         }
                     }
                     for (a = 0; a < txts_new.length; a++){ // Verifica no antigo testamento
-                        if (txts_new[a].nome == valor){ // Procura o livro
+                        if (txts_new[a].nome == livro.value){ // Procura o livro
                             for (z = 1; z <= txts_new[a].capitulos; z++) { // Lista os capítulos
                                 let option = document.createElement('option');
                                 option.value = z;
@@ -126,24 +128,22 @@
                             return nomes = txts_new[a].nome
                         }
                     }
-                };
+                });
                 
-                function mudou2(valor) { // MUDANDO CAPÍTULO
-                    // Limpar as options
-                    var M = listaVerI.options.length - 1;
+                listaCap.addEventListener('change', function () { // MUDANDO CAPÍTULO
+                    var M = listaVerI.options.length - 1; // Limpar as options
                     var N = listaVerF.options.length - 1;
 
                     for (var i = M; i >= 0; i--) {
                         listaVerI.remove(i)
-                    }
-                    for (var i = N; i >= 0; i--) {
+                    } for (var i = N; i >= 0; i--) {
                         listaVerF.remove(i)
                     }
 
                     // Rodar a função
                     for (a = 0; a < txts_old.length; a++){ // Verifica no antigo testamento
                         if (txts_old[a].nome == nomes){ // Procura o livro
-                            for (z = 1; z <= txts_old[a].leitura[valor]["versi"]; z++) { // Lista os versículos
+                            for (z = 1; z <= txts_old[a].leitura[listaCap.value]["versi"]; z++) { // Lista os versículos
                                 let option = document.createElement('option');
                                 option.value = z;
                                 let conteudo = document.createTextNode(z);
@@ -151,7 +151,7 @@
 
                                 listaVerI.appendChild(option.cloneNode(true))
                                 listaVerF.appendChild(option)
-                                if (txts_old[a].leitura[valor]["versi"] == z) {
+                                if (txts_old[a].leitura[listaCap.value]["versi"] == z) {
                                     option.selected = true
                                 }
                             }
@@ -159,7 +159,7 @@
                     }
                     for (a = 0; a < txts_new.length; a++){ // Verifica no antigo testamento
                         if (txts_new[a].nome == nomes){ // Procura o livro
-                            for (z = 1; z <= txts_new[a].leitura[valor]["versi"]; z++) { // Lista os versículos
+                            for (z = 1; z <= txts_new[a].leitura[listaCap.value]["versi"]; z++) { // Lista os versículos
                                 let option = document.createElement('option');
                                 option.value = z;
                                 let conteudo = document.createTextNode(z);
@@ -167,13 +167,13 @@
 
                                 listaVerI.appendChild(option.cloneNode(true))
                                 listaVerF.appendChild(option)
-                                if (txts_new[a].leitura[valor]["versi"] == z) {
+                                if (txts_new[a].leitura[listaCap.value]["versi"] == z) {
                                     option.selected = true
                                 }
                             }
                         }
                     }
-                }
+                });
             </script>
 
             <div class="boxShadow res">
@@ -184,15 +184,16 @@
 
         <div class="rigth boxShadow">
             <form action="/criar/devocional" method="post">
-                <h1>Devo xx.xx.xxxx</h1>
+            <input type="text" name="titulo2" value="{{titInp}}" style="display: none;">
+                <h1>Devo {{datadevo}}</h1>
                 <div class="label">
                     <label for="q1">O que a passagem quer dizer?</label>
-                    <textarea class="boxShadow" id="q1" placeholder="O que o texto significa? Qual o contexto da passagem?" rows="3"></textarea>
+                    <textarea class="boxShadow" name="q1" id="q1" placeholder="O que o texto significa? Qual o contexto da passagem?" rows="3"></textarea>
                 </div>
                 <div class="space"></div>
                 <div class="label">
                     <label for="q2">O que Deus está me falando a partir dela?</label>
-                    <textarea class="boxShadow" id="q2" placeholder="O que o texto me diz? O que eu respondo a Deus?" rows="3"></textarea>
+                    <textarea class="boxShadow" name="q2" id="q2" placeholder="O que o texto me diz? O que eu respondo a Deus?" rows="3"></textarea>
                 </div>
             
                 {{#if err}}

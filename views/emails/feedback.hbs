@@ -22,7 +22,6 @@ h1, h2 {
 .linha {
     display: flex;
     justify-content: center;
-    flex-direction: row;
     align-items: center;
     max-width: fit-content;
     margin: auto;
@@ -58,6 +57,9 @@ p.code, p.select {
     color: white;
     border-radius: 10px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
     font-family: Arial, Helvetica, sans-serif;
     max-width: fit-content;
     font-weight: bolder;
@@ -83,9 +85,9 @@ p.txt {
     
     {{#if ItensProblema}}
         <p class="span">Suas escolhas foram:</p>
-        <div class="linha">
+        <div class="linha" style="flex-direction: column;">
             <p class="select">{{problema}}</p>
-            <p class="select">→ {{ItensProblema}}</p>
+            <p class="select">{{ItensProblema}}</p>
         </div>
     {{else}}
         <p class="span">Sua escolha foi:</p>

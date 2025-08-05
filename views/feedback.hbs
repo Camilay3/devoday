@@ -11,11 +11,12 @@
     <title>Enviar feedback</title>
 </head>
 <body>
-    {{> header}}
+    {{> preloader }}
+    {{> header }}
 
     <section>
         <form action="/auth/feedback" method="POST" class="boxShadow">
-            <select name="problema" id="action" onclick="mudou1(value)">
+            <select name="problema" id="act">
                 <option value="outro" disabled selected>Selecione sua ação</option>
                 <optgroup label="Problemas">
                     <option value="Conta">Problema na conta</option>
@@ -39,20 +40,18 @@
 
     <script>
         const itens = {
-            "Conta": ["Não consigo editar dados", "Não consigo sair", "Não consigo excluir"], 
-            "Leituras": ["Texto com erros de escrita", "Texto com versículo trocado", "Numeração de capítulos com erros", "Numeração de versículos com erros"], 
-            "Seleção": ["Não aparece o texto selecionado", "O texto exibido não condiz com o selecionado"], 
-            "Cards": ["Data errada", "Data invisível", "Erro no versículo", "Erro no texto", "Não consigo editar", "Não consigo excluir", "Meu texto não aparece"], 
-            "Sugestão diária": ["Data errada", "Data invisível", "Não consigo criar a partir do texto"], 
-            "Visual": ["Elementos bugados", "Texto saindo do lugar", "Botão atrapalhando clique"]
+            "Conta": ["Não consigo editar dados", "Não consigo sair", "Não consigo excluir", "Outro"], 
+            "Leituras": ["Texto com erros de escrita", "Texto com versículo trocado", "Numeração de capítulos com erros", "Numeração de versículos com erros", "Outro"], 
+            "Seleção": ["Não aparece o texto selecionado", "O texto exibido não condiz com o selecionado", "Outro"], 
+            "Cards": ["Data errada", "Data invisível", "Erro no versículo", "Erro no texto", "Não consigo editar", "Não consigo excluir", "Meu texto não aparece", "Outro"], 
+            "Sugestão diária": ["Data errada", "Data invisível", "Não consigo criar a partir do texto", "Outro"], 
+            "Visual": ["Elementos bugados", "Texto saindo do lugar", "Botão atrapalhando clique", "Outro"]
         };
-
-        const ação = document.querySelector('#action');
+        let act = document.querySelector('#act');
         let listaProblemas = document.querySelector('#probls');
         
-        function mudou1(valor) {
-            // Limpar as options
-            var L = listaProblemas.options.length - 1;
+        act.addEventListener('change', function () {
+            var L = listaProblemas.options.length - 1; // Limpar as options
 
             for (var i = L; i >= 0; i--) {
                 listaProblemas.remove(i)
@@ -60,7 +59,7 @@
             
             // trocar o select
             for (var [key, value] of Object.entries(itens)) {
-                if (key == valor) { 
+                if (key == act.value) { 
                     listaProblemas.style.display = 'block';
 
                     for (var item in value) {
@@ -71,11 +70,11 @@
 
                         listaProblemas.appendChild(option);
                     }
-                } else if (valor == "Sugestão" || valor == "Outros") {
+                } else if (act.value == "Sugestão" || act.value == "Outros") {
                     listaProblemas.style.display = 'none';
                 }
             }
-        }
+        });
     </script>
 </body>
 </html>

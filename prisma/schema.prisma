@@ -1,40 +1,42 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model Users {
-  id Int @id @default(autoincrement())
-  email String @unique @db.VarChar(100)
-  senha String @db.VarChar(255)
-  token Int
-  icon Int @default(0) 
-  verify Int @default(0)
-  cards Int @default(0)
-  cardsObj Cards[]
-
-  @@map("users")
-}
-
-model Cards {
-  id Int @id @default(autoincrement())
-  donoId Int
-  livro String @db.VarChar(20)
-  capitulo Int
+model cards {
+  id          Int    @id @default(autoincrement())
+  donoId      Int
+  fav         Int    @default(0)
+  livro       String @db.VarChar(20)
+  capitulo    Int
   versInicial Int
-  versFinal Int
-  data String @db.VarChar(15)
-  q1 String
-  q2 String
+  versFinal   Int
+  data        String @db.VarChar(15)
+  q1          String
+  q2          String
+  users       users  @relation(fields: [donoId], references: [id])
+}
 
-  dono Users @relation(fields: [donoId], references: [id])
+model frases {
+  id         Int    @id @default(autoincrement())
+  lastupdate String
+  titulo     String
+  text       String
+}
 
-  @@map("cards")
+model users {
+  id        Int     @id @default(autoincrement())
+  email     String  @unique @db.VarChar(100)
+  senha     String  @db.VarChar(255)
+  token     Int
+  icon      Int     @default(0)
+  verify    Int     @default(0)
+  num_cards Int     @default(0)
+  cards     cards[]
 }

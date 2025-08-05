@@ -11,9 +11,22 @@
         <title>Alterar dados</title>
     </head>
     <body>
+        {{> preloader }}
+        
+        <div class="cont" style="display: none;">
+            <a href="../alterar" class="sair">Cancelar exclusão</a>
+            <img src="/imgs/tristeFB.png" alt="guia">
+            <div class="txts">
+                <div class="text">
+                    <h1>Cuidado!</h1>
+                    <p>Tem certeza que deseja mesmo deletar sua conta? Isso destruirá todos os seus devocionais e não poderá recuperá-los. Se quiser mesmo fazer isso clique em "continuar exclusão". Caso o devoday tenha te decepcionado, nós aceitamos sugestões na aba <a href="../feedback" class="btn criar" style="text-decoration: underline;">feedback</a>. Espero te ver novamente para que possamos recomeçar nossa jornada!</p>
+                    <a onclick="fechar()" class="btn criar">Continuar exclusão</a>
+                </div>
+            </div>
+        </div>
         <form class="boxShadow" action="/auth/alterar" method="POST">
 
-            <select name="altera" id="action" onclick="mudou1(value)">
+            <select name="altera" id="act">
                 <option value="outro" disabled selected>Selecione sua ação</option>
                 <option value="email">Alterar email</option>
                 <option value="senha">Alterar senha</option>
@@ -25,7 +38,7 @@
                 <div class="topic">
                     <label for="emailIemailant">Email antigo</label>
                     <div class="input">
-                        <input type="email" name="emailIemailant" id="emailIemailant" placeholder="Insira o email antigo">
+                        <input type="email" name="emailIemailan" id="emailIemailant" placeholder="Insira o email antigo">
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>
@@ -33,7 +46,7 @@
                 <div class="topic">
                     <label for="emailIemail">Email novo</label>
                     <div class="input">
-                        <input type="email" name="emailIemail" id="emailIemail" placeholder="Insira o novo email">
+                        <input type="email" name="emailIemai" id="emailIemail" placeholder="Insira o novo email">
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>
@@ -51,7 +64,7 @@
                 <div class="topic">
                     <label for="senhaIemail">Email</label>
                     <div class="input">
-                        <input type="email" name="senhaIemail" id="senhaIemail" placeholder="Insira o email">
+                        <input type="email" name="senhaIemai" id="senhaIemail" placeholder="Insira o email">
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>
@@ -77,7 +90,7 @@
                 <div class="topic">
                     <label for="deletarIemail">Email</label>
                     <div class="input">
-                        <input type="email" name="deletarIemail" id="deletarIemail" placeholder="Insira o email">
+                        <input type="email" name="deletarIemai" id="deletarIemail" placeholder="Insira o email">
                         <i class="fi fi-rr-envelope"></i>
                     </div>
                 </div>
@@ -100,52 +113,58 @@
             {{/if}}
             <input type="submit" class="btn criar" value="Alterar dados" style="display: none;">
             <input type="submit" class="btn criar" value="Excluir conta" style="display: none;" id="delete">
-            <a href="home" class="btn criar">Cancelar alteração</a>
+            <a href="../home" class="btn criar">Cancelar alteração</a>
         </form>
 
         <script src="/js/login.js"></script>
         <script>
+            let act = document.querySelector('#act');
             let labels = document.querySelectorAll('.imagem label');
             let email = document.querySelector('.emailI');
             let senha = document.querySelector('.senhaI');
             let imagem = document.querySelector('.imagemI');
+            let aviso = document.querySelector('.cont');
             let deletar = document.querySelector('.deletarI');
             let inputS = document.querySelector('input.criar');
             let inputD = document.querySelector('input#delete');
-            let imagens = ['cordeiro', 'coelho'];
+            let imagens = ['cordeiro', 'pomba2', 'coelho', 'leao', 'coelho2', 'pomba'];
             
-            function mudou1(valor) {
+            act.addEventListener('change', function () {
                 imagem.innerText = "";
-                if (valor == 'email') {
+                if (act.value == 'email') {
                     inputS.style.display = 'block';
                     inputD.style.display = 'none';
                     email.style.display = 'block';
                     senha.style.display = 'none';
                     imagem.style.display = 'none';
+                    aviso.style.display = 'none';
                     deletar.style.display = 'none';
 
-                } else if (valor == 'senha') {
+                } else if (act.value == 'senha') {
                     inputS.style.display = 'block';
                     inputD.style.display = 'none';
                     email.style.display = 'none';
                     senha.style.display = 'block';
+                    aviso.style.display = 'none';
                     imagem.style.display = 'none';
                     deletar.style.display = 'none';
 
-                } else if (valor == 'deletar') {
+                } else if (act.value == 'deletar') {
                     inputS.style.display = 'none';
                     inputD.style.display = 'block';
                     email.style.display = 'none';
                     senha.style.display = 'none';
                     imagem.style.display = 'none';
+                    aviso.style.display = 'block';
                     deletar.style.display = 'block';
 
-                } else if (valor == 'imagem') {
+                } else if (act.value == 'imagem') {
                     inputS.style.display = 'block';
                     inputD.style.display = 'none';
                     email.style.display = 'none';
                     senha.style.display = 'none';
-                    imagem.style.display = 'block';
+                    imagem.style.display = 'flex';
+                    aviso.style.display = 'none';
                     deletar.style.display = 'none';
 
                     for (let x = 1; x <= imagens.length; x++) {
@@ -159,7 +178,7 @@
                         label.htmlFor = 'radio' + x
                         let icone = document.createElement('img');
 
-                        icone.src = '/imgs/' + imagens[x-1] + '.jpg';
+                        icone.src = '/imgs/' + imagens[x-1] + '.png';
                         icone.className = 'i'
                         icone.id = 'i' + x;
 
@@ -168,6 +187,10 @@
                         imagem.appendChild(label);
                     }
                 }
+            });
+
+            function fechar() {
+                aviso.style.display = 'none';
             }
         </script>
     </body>
