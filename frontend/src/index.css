@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+:root {
+	--primary: #D7EEFF;
+	--secondary: #FED6ED;
+	--white: #fff;
+
+	--text: #6b6375;
+	--text-h: #08060d;
+	--border: #e5e4e7;
+	--code-bg: #f4f3ec;
+	--accent: #aa3bff;
+	--accent-bg: rgba(170, 59, 255, 0.1);
+	--accent-border: rgba(170, 59, 255, 0.5);
+	--social-bg: rgba(244, 243, 236, 0.5);
+	--shadow:
+		rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+	--font-family: "Comic Neue", cursive;
+
+	color: var(--text);
+	background: var(--secondary);
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	width: 100%;
+	min-height: 100dvh;
+	background: #DFECFD;
+	background: linear-gradient(90deg, rgba(223, 236, 253, 1) 0%, rgba(251, 211, 235, 1) 50%, rgba(206, 207, 235, 1) 100%);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+	font-family: var(--font-family);
+}
+
+h1, h2 {
+	font-weight: 500;
+	color: var(--text-h);
+}
