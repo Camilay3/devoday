@@ -8,43 +8,67 @@ servers:
   - url: http://localhost:3003
     description: Servidor local
 
+tags:
+  - name: Auth
+    description: Rotas de autenticação e cadastro
+
 paths:
-  /auth/cadastro:
+  /api/auth/cadastro:
     post:
-      summary: Realiza o cadastro de um usuário
+      tags:
+        - Auth
+      summary: Cria um novo usuário
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                nome:
-                  type: string
-              required:
-                - nome
-              example:
-                nome: Carlos
+              $ref: '#/components/schemas/Usuario'
       responses:
         '201':
-          description: Cadastro recebido com sucesso
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '400':
+          description: Dados inválidos
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  message:
-                    type: string
-                    example: Cadastro recebido
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Email inválido
+                        path:
+                          type: array
+                          items:
+                            type: string
+                          example: ["email"]
 
 components:
   schemas:
     Usuario:
       type: object
       properties:
-        id:
-          type: integer
-          example: 1
-        nome:
+        name:
           type: string
           example: "João"
+        email:
+          type: string
+          format: email
+          example: "joao@email.com"
+        password:
+          type: string
+          format: password
+          example: "senha123"
+      required:
+        - name
+        - email
+        - password
