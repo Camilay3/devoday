@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Devoday API
+  version: 1.0.0
+  description: Documentação da API feita com Swagger
+
+servers:
+  - url: http://localhost:3003
+    description: Servidor local
+
+paths:
+  /auth/cadastro:
+    post:
+      summary: Realiza o cadastro de um usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+              required:
+                - nome
+              example:
+                nome: Carlos
+      responses:
+        '201':
+          description: Cadastro recebido com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Cadastro recebido
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          example: "João"

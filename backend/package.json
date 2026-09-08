@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "pg": "^8.23.0",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   }
 }

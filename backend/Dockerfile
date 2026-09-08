@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-COPY index.js ./
+COPY index.js swagger.yaml ./
 
 EXPOSE 3003
 
