@@ -112,7 +112,10 @@ export function Landing() {
 
 				<div className="buttons flex flex-col gap-2">
 					<Button variant="fill" size="lg">Começar agora</Button>
-					<Button variant="link" className="text-foreground">Voltar ao topo</Button>
+					<Button variant="link" className="text-foreground"
+					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+						Voltar ao topo
+					</Button>
 				</div>
 			</section>
 		</>
