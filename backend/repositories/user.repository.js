@@ -20,3 +20,14 @@ export function create(data) {
 export function findByEmail(email) {
 	return prisma.user.findUnique({ where: { email } });
 }
+
+export function updateUser(data) {
+	return prisma.user.update({
+		where: { id: data.id },
+		data: {
+			name: data.name,
+			email: data.email
+		},
+		omit: { password: true }
+	})
+}

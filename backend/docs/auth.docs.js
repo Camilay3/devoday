@@ -1,4 +1,4 @@
-import { createUserSchema, userResponseSchema, listUsersResponseSchema, userIdParamSchema, } from '../validators/user.validator.js';
+import { createUserSchema, userResponseSchema, listUsersResponseSchema, userIdParamSchema, editUserSchema, } from '../validators/user.validator.js';
 import { registry } from './registry.js';
 
 registry.registerPath({
@@ -44,6 +44,25 @@ registry.registerPath({
 	responses: {
 		201: {
 			description: 'Usuário criado com sucesso',
+			content: { 'application/json': { schema: userResponseSchema } },
+		},
+	},
+});
+
+registry.registerPath({
+	method: 'patch',
+	path: '/api/auth/editar/{id}',
+	tags: ['Auth'],
+	summary: 'Edita um usuário parcialmente',
+	request: {
+		params: userIdParamSchema,
+		body: {
+			content: { 'application/json': { schema: editUserSchema } },
+		},
+	},
+	responses: {
+		201: {
+			description: 'Usuário atualizado com sucesso',
 			content: { 'application/json': { schema: userResponseSchema } },
 		},
 	},

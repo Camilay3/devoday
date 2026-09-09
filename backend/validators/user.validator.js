@@ -26,3 +26,8 @@ export const createUserSchema = z.object({
 	email: z.string().email('Email inválido').openapi({ example: 'joao@email.com' }),
 	password: z.string().min(8, 'Senha precisa ter no mínimo 8 caracteres').openapi({ example: 'senha123' }),
 }).openapi('CreateUsuarioInput');
+
+export const editUserSchema = z.object({
+    name: z.string().min(3, 'Nome precisa ter no mínimo 3 caracteres').openapi({ example: 'João' }),
+    email: z.string().email('Email inválido').openapi({ example: 'joao@email.com' }),
+}).partial().openapi('EditUsuarioInput');
