@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "prisma generate --config prisma7.config.ts && tsx watch index.js",
     "start": "prisma generate --config prisma7.config.ts && node --import tsx/esm index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,13 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^9.1.0",
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "bcrypt": "^6.0.0",
     "express": "^5.2.1",
     "pg": "^8.23.0",
     "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {
