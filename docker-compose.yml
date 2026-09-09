@@ -51,7 +51,11 @@ services:
       backend:
         condition: service_healthy
     ports:
-      - "${FRONTEND_PORT}:80"
+      # - "${FRONTEND_PORT}:80"
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:
