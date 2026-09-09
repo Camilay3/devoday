@@ -30,5 +30,11 @@ export const updateUser = asyncHandler(async (req, res) => {
 	const { name, email } = req.body;
 
 	const updatedUser = await userService.updateUser({ id, name, email });
-	res.status(201).json(updatedUser);
+	res.status(200).json(updatedUser);
+});
+
+export const deleteUser = asyncHandler(async (req, res) => {
+	const id = parseId(req.params.id);
+	await userService.deleteUser(id);
+	res.status(200).json({ message: 'Usuário excluído com sucesso' });
 });

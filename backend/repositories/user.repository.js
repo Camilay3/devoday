@@ -31,3 +31,7 @@ export function updateUser(data) {
 		omit: { password: true }
 	})
 }
+
+export function deleteUser(id) {
+	return prisma.user.delete({ where: { id } });
+}

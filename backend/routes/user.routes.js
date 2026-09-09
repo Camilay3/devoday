@@ -9,6 +9,6 @@ router.get('/listar', userController.listUsers);
 router.get('/:id', userController.getUser);
 router.post('/cadastro', validate(createUserSchema), userController.createUser);
 router.patch('/editar/:id', validate(editUserSchema), userController.updateUser);
-// router.delete('/:id', userController.deleteUser);
+router.delete('/excluir/:id', userController.deleteUser);
 
 export default router;

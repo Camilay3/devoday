@@ -6,8 +6,10 @@ export async function listUsers() {
 	return userRepository.getAll();
 }
 
-export async function getUser(data) {
-	return userRepository.getUser(data.id);
+export async function getUser(id) {
+	const user = await userRepository.getUser(id);
+    if (!user) throw new AppError('Usuário não encontrado', 404);
+	return user;
 }
 
 export async function createUser(data) {
@@ -19,8 +21,7 @@ export async function createUser(data) {
 }
 
 export async function updateUser(data) {
-	const user = await userRepository.getUser(data.id);
-    if (!user) throw new AppError('Usuário não encontrado', 404);
+	await getUser(data.id);
 
 	if (data.email) {
         const existing = await userRepository.findByEmail(data.email);
@@ -28,4 +29,9 @@ export async function updateUser(data) {
     }
 
     return userRepository.updateUser(data);
+}
+
+export async function deleteUser(id) {
+	await getUser(id);
+	return userRepository.deleteUser(id);
 }

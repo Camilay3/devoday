@@ -1,3 +1,4 @@
+import { messageResponseSchema } from '../validators/generic.validator.js';
 import { createUserSchema, userResponseSchema, listUsersResponseSchema, userIdParamSchema, editUserSchema, } from '../validators/user.validator.js';
 import { registry } from './registry.js';
 
@@ -61,9 +62,23 @@ registry.registerPath({
 		},
 	},
 	responses: {
-		201: {
+		200: {
 			description: 'Usuário atualizado com sucesso',
 			content: { 'application/json': { schema: userResponseSchema } },
+		},
+	},
+});
+
+registry.registerPath({
+	method: 'delete',
+	path: '/api/auth/excluir/{id}',
+	tags: ['Auth'],
+	summary: 'Exclua um usuário permanentemente',
+	request: { params: userIdParamSchema },
+	responses: {
+		200: { 
+			description: 'Usuário excluído com sucesso',
+			content: { 'application/json': { schema: messageResponseSchema } }
 		},
 	},
 });
