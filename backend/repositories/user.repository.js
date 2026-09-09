@@ -6,6 +6,13 @@ export function getAll() {
 	});	
 }
 
+export function getUser(id) {
+	return prisma.user.findUnique({ 
+		where: { id }, 
+		omit: { password: true } 
+	});
+}
+
 export function create(data) {
 	return prisma.user.create({ data });
 }

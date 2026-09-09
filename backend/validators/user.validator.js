@@ -9,6 +9,13 @@ export const userResponseSchema = z.object({
 	email: z.string().email().openapi({ example: 'joao@email.com' }),
 }).openapi('Usuario');
 
+export const userIdParamSchema = z.object({
+	id: z.coerce.number().openapi({
+		param: { name: 'id', in: 'path', required: true },
+		example: 1,
+	}),
+});
+
 export const listUsersResponseSchema = z.object({
 	totalElements: z.number().openapi({ example: 10 }),
 	data: z.array(userResponseSchema),
