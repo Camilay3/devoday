@@ -3,16 +3,21 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from "lucide-react";
 import "./Landing.css";
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 
 export function Landing() {
+	const navigate = useNavigate();
+
 	return (
 		<>
 			<section className="flex pt-8 px-8 w-full gap-2 justify-end">
-				<Button className="w-fit" size="lg" variant="outline">
+				<Button className="w-fit" size="lg" variant="outline"
+				onClick={() => navigate("/entrar", { state: { isLogin: true } })}>
 					Entrar
 				</Button>
 
-				<Button className="w-fit" size="lg">
+				<Button className="w-fit" size="lg"
+				onClick={() => navigate("/entrar", { state: { isLogin: false } })}>
 					Criar conta
 				</Button>
 			</section>
@@ -21,7 +26,8 @@ export function Landing() {
 				<div className="text-center flex flex-col gap-4 items-center">
 					<h1 className="text-6xl font-bold">Devocional day</h1>
 					<h2 className="text-5xl mb-4">Seus devocionais, de forma <b>simples</b>.</h2>
-					<Button className="w-fit">
+					<Button className="w-fit"
+					onClick={() => navigate("/entrar", { state: { isLogin: false } })}>
 						Começar agora
 						<ArrowRight />
 					</Button>
@@ -111,7 +117,8 @@ export function Landing() {
 				</div>
 
 				<div className="buttons flex flex-col gap-2">
-					<Button variant="fill" size="lg">Começar agora</Button>
+					<Button variant="fill" size="lg"
+					onClick={() => navigate("/entrar", { state: { isLogin: false } })}>Começar agora</Button>
 					<Button variant="link" className="text-foreground"
 					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
 						Voltar ao topo
