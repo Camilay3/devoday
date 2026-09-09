@@ -5,7 +5,7 @@ import { createUserSchema } from '../validators/user.validator.js';
 
 const router = Router();
 
-// router.get('/', userController.listUsers);
+router.get('/listar', userController.listUsers);
 // router.get('/:id', userController.getUser);
 router.post('/cadastro', validate(createUserSchema), userController.createUser);
 // router.put('/:id', userController.updateUser);

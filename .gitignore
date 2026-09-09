@@ -15,7 +15,7 @@ dist-ssr
 .env.*
 !.env.example
 
-/generated/prisma
+**/generated/prisma
 
 # Editor directories and files
 .vscode/*

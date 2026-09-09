@@ -1,5 +1,11 @@
 import prisma from '../prisma/client.js';
 
+export function getAll() {
+	return prisma.user.findMany({
+		omit: { password: true },
+	});	
+}
+
 export function create(data) {
 	return prisma.user.create({ data });
 }
