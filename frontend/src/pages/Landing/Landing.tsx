@@ -28,7 +28,7 @@ export function Landing() {
 				</div>
 			</section>
 
-			<div className="relative h-40">
+			<div className="relative h-40 overflow-x-clip">
 				<svg
 					className="absolute bottom-0 left-1/2 h-64 w-[130%] -translate-x-1/2"
 					viewBox="0 0 1200 180"
