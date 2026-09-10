@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 extendZodWithOpenApi(z);
 
-export const messageResponseSchema = z.object({
-    message: z.string().openapi({
-        example: 'Excluído com sucesso'
-    })
-});
+export const defaultResponseSchema = z.object({
+	success: z.boolean().openapi({ example: true }),
+	message: z.string().openapi({ example: "Cadastrado com sucesso" }),
+	data: z.unknown(),
+}).openapi('defaultResponse');

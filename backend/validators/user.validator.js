@@ -18,7 +18,7 @@ export const userIdParamSchema = z.object({
 
 export const listUsersResponseSchema = z.object({
 	totalElements: z.number().openapi({ example: 10 }),
-	data: z.array(userResponseSchema),
+	content: z.array(userResponseSchema),
 }).openapi('ListaUsuarios');
 
 export const createUserSchema = z.object({

@@ -1,6 +1,14 @@
-import { messageResponseSchema } from '../validators/generic.validator.js';
+import { defaultResponseSchema } from '../validators/generic.validator.js';
 import { createUserSchema, userResponseSchema, listUsersResponseSchema, userIdParamSchema, editUserSchema, } from '../validators/user.validator.js';
 import { registry } from './registry.js';
+
+const userResponseEnvelopeSchema = defaultResponseSchema.extend({
+	data: userResponseSchema,
+}).openapi('UsuarioResponse');
+
+const listUsersResponseEnvelopeSchema = defaultResponseSchema.extend({
+	data: listUsersResponseSchema,
+}).openapi('ListaUsuariosResponse');
 
 registry.registerPath({
 	method: 'get',
@@ -10,7 +18,7 @@ registry.registerPath({
 	responses: {
 		200: {
 			description: 'Usuários listados com sucesso',
-			content: { 'application/json': { schema: listUsersResponseSchema } },
+			content: { 'application/json': { schema: listUsersResponseEnvelopeSchema } },
 		},
 	},
 });
@@ -26,7 +34,7 @@ registry.registerPath({
 	responses: {
 		200: {
 			description: 'Usuário encontrado com sucesso',
-			content: { 'application/json': { schema: userResponseSchema } },
+			content: { 'application/json': { schema: userResponseEnvelopeSchema } },
 		},
 		404: { description: 'Usuário não encontrado' },
 	},
@@ -45,7 +53,7 @@ registry.registerPath({
 	responses: {
 		201: {
 			description: 'Usuário criado com sucesso',
-			content: { 'application/json': { schema: userResponseSchema } },
+			content: { 'application/json': { schema: userResponseEnvelopeSchema } },
 		},
 	},
 });
@@ -64,7 +72,7 @@ registry.registerPath({
 	responses: {
 		200: {
 			description: 'Usuário atualizado com sucesso',
-			content: { 'application/json': { schema: userResponseSchema } },
+			content: { 'application/json': { schema: userResponseEnvelopeSchema } },
 		},
 	},
 });
@@ -78,7 +86,7 @@ registry.registerPath({
 	responses: {
 		200: { 
 			description: 'Usuário excluído com sucesso',
-			content: { 'application/json': { schema: messageResponseSchema } }
+			content: { 'application/json': { schema: defaultResponseSchema } }
 		},
 	},
 });

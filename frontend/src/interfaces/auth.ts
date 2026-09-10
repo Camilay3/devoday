@@ -3,3 +3,9 @@ export interface ICadastro {
 	email: string,
 	password: string,
 }
+
+export interface IUsuario {
+	id: number,
+	name: string,
+	email: string,
+}
