@@ -12,15 +12,12 @@ import { Button } from "@/components/ui/button";
 export function Entrar() {
     const location = useLocation();
     const [isLogin, setIsLogin] = useState<boolean>( location.state?.isLogin ?? true );
+    function alternarFormulario() { setIsLogin((valorAtual) => !valorAtual); }
 
-    function alternarFormulario() {
-        setIsLogin((valorAtual) => !valorAtual);
-    }
-
-	const [imagem, setImagem] = useState(isLogin ? loginImg : cadastroImg);
+	const [isLoginDelayed, setIsLoginDelayed] = useState(isLogin);
 	useEffect(() => {
 		const timeout = setTimeout(() => {
-			setImagem(isLogin ? loginImg : cadastroImg);
+			setIsLoginDelayed(isLogin);
 		}, 100);
 
 		return () => clearTimeout(timeout);
@@ -38,17 +35,17 @@ export function Entrar() {
                 }}
             >
                 <motion.div layout className="welcome flex flex-col items-center justify-center p-4 gap-6 w-[50%]">
-                    <img src={imagem} alt="Cristãos" draggable="false"/>
+                    <img src={isLoginDelayed ? loginImg : cadastroImg} alt="Cristãos" draggable="false"/>
 
-					<div className="text-center">
-						<h1 className="text-4xl font-bold">{isLogin ? "Conecte-se" : "Crie uma conta"}</h1>
+					 <div className="text-center">
+						<h1 className="text-4xl font-bold">{isLoginDelayed ? "Conecte-se" : "Crie uma conta"}</h1>
 						<p className="text-2xl mt-2">
-							{isLogin ? "Continue na sua jornada de conhecimento!" : "Alcance seus objetivos com o devoday!"}
+							{isLoginDelayed ? "Continue na sua jornada de conhecimento!" : "Alcance seus objetivos com o devoday!"}
 						</p>
 					</div>
 
 					<Button variant="link" className="text-foreground font-semibold" onClick={alternarFormulario}>
-						{isLogin ? "Ainda não tenho uma conta" : "Já tenho uma conta"}
+						{isLoginDelayed ? "Ainda não tenho uma conta" : "Já tenho uma conta"}
 					</Button>
                 </motion.div>
 
