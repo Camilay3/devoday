@@ -13,14 +13,6 @@ export function getUser(id) {
 	});
 }
 
-export function create(data) {
-	return prisma.user.create({ data, omit: { password: true }, });
-}
-
-export function findByEmail(email) {
-	return prisma.user.findUnique({ where: { email } });
-}
-
 export function updateUser(data) {
 	return prisma.user.update({
 		where: { id: data.id },

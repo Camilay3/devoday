@@ -2,6 +2,7 @@ import { OpenApiGeneratorV3 } from '@asteasolutions/zod-to-openapi';
 import { registry } from './registry.js';
 
 import './auth.docs.js';
+import './user.docs.js';
 
 const generator = new OpenApiGeneratorV3(registry.definitions);
 export const openApiDocument = generator.generateDocument({
