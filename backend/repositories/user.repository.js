@@ -14,7 +14,7 @@ export function getUser(id) {
 }
 
 export function create(data) {
-	return prisma.user.create({ data });
+	return prisma.user.create({ data, omit: { password: true }, });
 }
 
 export function findByEmail(email) {

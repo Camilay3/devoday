@@ -53,7 +53,7 @@ export function Entrar() {
                 </motion.div>
 
                 <motion.div layout className="form bg-primary h-full w-[50%] rounded-4xl p-6">
-					{isLogin ? <LoginForm /> : <CadastroForm />}
+					{isLogin ? <LoginForm /> : <CadastroForm onCadastroSucesso={alternarFormulario} />}
                 </motion.div>
             </motion.section>
         </main>
