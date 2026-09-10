@@ -7,5 +7,7 @@ const router = Router();
 
 router.post('/login', validate(loginUserSchema), authController.login);
 router.post('/cadastro', validate(createUserSchema), authController.register);
+router.post('/refresh', authController.refresh);
+router.post('/logout', authController.logout);
 
 export default router;

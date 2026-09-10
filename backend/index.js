@@ -7,7 +7,6 @@ import { responseMiddleware } from './middlewares/response.middleware.js';
 
 const app = express();
 app.get('/health', (_req, res) => res.sendStatus(200));
-app.listen(3003, () => console.log('Servidor iniciado!'));
 
 import { openApiDocument } from './docs/swagger.js';
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
@@ -20,3 +19,5 @@ app.use(cors({
 app.use('/api', responseMiddleware);
 app.use('/api', routes);
 app.use(errorMiddleware);
+
+app.listen(3003, () => console.log('Servidor iniciado!'));

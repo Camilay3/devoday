@@ -5,7 +5,7 @@ import { registry } from './registry.js';
 registry.registerPath({
 	method: 'get',
 	path: '/api/user/listar',
-	tags: ['User'],
+	tags: ['Usuário'],
 	summary: 'Lista os usuários',
 	responses: {
 		200: {
@@ -31,7 +31,7 @@ registry.registerPath({
 registry.registerPath({
 	method: 'get',
 	path: '/api/user/{id}',
-	tags: ['User'],
+	tags: ['Usuário'],
 	summary: 'Exibe um usuário',
 	request: { params: userIdParamSchema },
 	responses: {
@@ -55,7 +55,7 @@ registry.registerPath({
 registry.registerPath({
 	method: 'patch',
 	path: '/api/user/editar/{id}',
-	tags: ['User'],
+	tags: ['Usuário'],
 	summary: 'Edita um usuário parcialmente',
 	request: {
 		params: userIdParamSchema,
@@ -82,7 +82,7 @@ registry.registerPath({
 registry.registerPath({
 	method: 'delete',
 	path: '/api/user/excluir/{id}',
-	tags: ['User'],
+	tags: ['Usuário'],
 	summary: 'Exclui um usuário permanentemente',
 	request: { params: userIdParamSchema },
 	responses: {
