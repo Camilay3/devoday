@@ -67,6 +67,14 @@ body {
 }
 html { overscroll-behavior: none; }
 
+/* Para senhas salvas pelo nagevador */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px color-mix(in srgb, var(--primary) 50%, white) inset;
+    -webkit-text-fill-color: var(--foreground);
+}
+
 @layer base {
 	h1, h2 {
 		font-weight: 500;
