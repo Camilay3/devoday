@@ -2,6 +2,7 @@ import * as userService from '../services/user.service.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { parseId } from '../utils/parseId.js';
 import { AppError } from '../utils/app.error.js';
+import { generateAccessToken, generateRefreshToken } from '../utils/token.js';
 
 export const listUsers = asyncHandler(async (req, res) => {
 	const lista = await userService.listUsers();
@@ -23,6 +24,22 @@ export const getUser = asyncHandler(async (req, res) => {
 export const createUser = asyncHandler(async (req, res) => {
 	const user = await userService.createUser(req.body);
 	res.status(201).json(user);
+});
+
+export const loginUser = asyncHandler(async (req, res) => {
+	const user = await userService.loginUser(req.body);
+
+	const accessToken = generateAccessToken(user.id);
+    const refreshToken = generateRefreshToken(user.id);
+
+	res.cookie('refreshToken', refreshToken, {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: 'lax',
+		maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+	res.status(201).json({accessToken, user});
 });
 
 export const updateUser = asyncHandler(async (req, res) => {

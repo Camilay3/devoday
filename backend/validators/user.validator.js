@@ -21,11 +21,21 @@ export const listUsersResponseSchema = z.object({
 	content: z.array(userResponseSchema),
 }).openapi('ListaUsuarios');
 
+export const tokenResponseSchema = z.object({
+	accessToken: z.string().openapi({ example: 'eyJhbGciOiJIUzI1N...' }),
+	user: userResponseSchema,
+}).openapi('TokenPayload');
+
 export const createUserSchema = z.object({
 	name: z.string().min(3, 'Nome precisa ter no mínimo 3 caracteres').openapi({ example: 'João' }),
 	email: z.string().email('Email inválido').openapi({ example: 'joao@email.com' }),
 	password: z.string().min(8, 'Senha precisa ter no mínimo 8 caracteres').openapi({ example: 'senha123' }),
 }).openapi('CreateUsuarioInput');
+
+export const loginUserSchema = z.object({
+	email: z.string().email('Email inválido').openapi({ example: 'joao@email.com' }),
+	password: z.string().min(8, 'Senha precisa ter no mínimo 8 caracteres').openapi({ example: 'senha123' }),
+}).openapi('LoginUsuarioInput');
 
 export const editUserSchema = z.object({
     name: z.string().min(3, 'Nome precisa ter no mínimo 3 caracteres').openapi({ example: 'João' }),

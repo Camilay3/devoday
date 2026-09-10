@@ -1,6 +1,8 @@
 import { defaultResponseSchema } from '../validators/generic.validator.js';
-import { createUserSchema, userResponseSchema, listUsersResponseSchema, userIdParamSchema, editUserSchema, } from '../validators/user.validator.js';
+import { createUserSchema, userResponseSchema, listUsersResponseSchema, userIdParamSchema, editUserSchema, loginUserSchema, tokenResponseSchema, } from '../validators/user.validator.js';
 import { registry } from './registry.js';
+
+registry.registerComponent('securitySchemes', 'bearerAuth', { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' });
 
 const userResponseEnvelopeSchema = defaultResponseSchema.extend({
 	data: userResponseSchema,
@@ -9,6 +11,38 @@ const userResponseEnvelopeSchema = defaultResponseSchema.extend({
 const listUsersResponseEnvelopeSchema = defaultResponseSchema.extend({
 	data: listUsersResponseSchema,
 }).openapi('ListaUsuariosResponse');
+
+const loginResponseEnvelopeSchema = defaultResponseSchema.extend({
+	data: tokenResponseSchema,
+}).openapi('LoginResponse');
+
+const errorResponses = {
+	400: { description: 'Dados inválidos', content: { 'application/json': { schema: defaultResponseSchema } } },
+	401: { description: 'Token não informado', content: { 'application/json': { schema: defaultResponseSchema } } },
+	403: { description: 'Token inválido ou expirado', content: { 'application/json': { schema: defaultResponseSchema } } },
+	404: { description: 'Recurso não encontrado', content: { 'application/json': { schema: defaultResponseSchema } } },
+	409: { description: 'Conflito', content: { 'application/json': { schema: defaultResponseSchema } } },
+	500: { description: 'Erro interno', content: { 'application/json': { schema: defaultResponseSchema } } },
+};
+
+registry.registerPath({
+	method: 'post',
+	path: '/api/auth/login',
+	tags: ['Auth'],
+	summary: 'Autentica um usuário',
+	request: {
+		body: {
+			content: { 'application/json': { schema: loginUserSchema } },
+		},
+	},
+	responses: {
+		201: {
+			description: 'Login realizado com sucesso',
+			content: { 'application/json': { schema: loginResponseEnvelopeSchema } },
+		},
+		...errorResponses,
+	},
+});
 
 registry.registerPath({
 	method: 'get',
@@ -20,7 +54,9 @@ registry.registerPath({
 			description: 'Usuários listados com sucesso',
 			content: { 'application/json': { schema: listUsersResponseEnvelopeSchema } },
 		},
+		...errorResponses,
 	},
+	security: [{ bearerAuth: [] }],
 });
 
 registry.registerPath({
@@ -36,8 +72,9 @@ registry.registerPath({
 			description: 'Usuário encontrado com sucesso',
 			content: { 'application/json': { schema: userResponseEnvelopeSchema } },
 		},
-		404: { description: 'Usuário não encontrado' },
+		...errorResponses,
 	},
+	security: [{ bearerAuth: [] }],
 });
 
 registry.registerPath({
@@ -55,6 +92,7 @@ registry.registerPath({
 			description: 'Usuário criado com sucesso',
 			content: { 'application/json': { schema: userResponseEnvelopeSchema } },
 		},
+		...errorResponses,
 	},
 });
 
@@ -74,7 +112,9 @@ registry.registerPath({
 			description: 'Usuário atualizado com sucesso',
 			content: { 'application/json': { schema: userResponseEnvelopeSchema } },
 		},
+		...errorResponses,
 	},
+	security: [{ bearerAuth: [] }],
 });
 
 registry.registerPath({
@@ -88,5 +128,7 @@ registry.registerPath({
 			description: 'Usuário excluído com sucesso',
 			content: { 'application/json': { schema: defaultResponseSchema } }
 		},
+		...errorResponses,
 	},
+	security: [{ bearerAuth: [] }],
 });
