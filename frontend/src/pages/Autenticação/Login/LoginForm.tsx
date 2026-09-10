@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 
 export function LoginForm(){
 	return (
-		<form className="flex flex-col justify-between bg-white rounded-4xl h-full p-6 shadow-uniforme">
+		<form className="flex flex-col justify-between bg-white rounded-2xl h-full p-6 shadow-uniforme">
 			<h1 className="text-4xl font-bold text-center">Boas vindas novamente!</h1>
 
 			<div className="inputs">

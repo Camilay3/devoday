@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import { cadastrar } from "@/services/auth.service";
 import { cadastroSchema, type CadastroFormData } from "@/schemas/cadastro.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,19 +29,20 @@ export function CadastroForm({ onCadastroSucesso }: Readonly<CadastroFormProps>)
 				email: data.email,
 				password: data.password,
 			});
+			toast.success("Cadastro realizado com sucesso!");
 			onCadastroSucesso();
 
 		} catch (error: unknown) {
 			(axios.isAxiosError<{ error?: string }>(error) && error.response?.data.error === "Email já cadastrado")
 				? setError("email", { type: "server", message: "Email já cadastrado" })
-				: setApiError("Não foi possível criar a conta. Tente novamente.");
+				: toast.error("Não foi possível criar a conta. Tente novamente.");
 
 		} finally { setIsLoading(false); }
 	}
 
 	return (
-		<form className="flex flex-col justify-between bg-white rounded-4xl h-full p-6 shadow-uniforme" onSubmit={handleSubmit(onSubmit)}>
-			<h1 className="text-4xl font-bold text-center">Boas vindas!</h1>
+		<form className="flex flex-col justify-between bg-white rounded-2xl h-full p-6 shadow-uniforme" onSubmit={handleSubmit(onSubmit)}>
+			<h1 className="text-4xl font-bold text-center">Boas vindas ao Devoday!</h1>
 
 			<div className="inputs">
 				<Input type="text" label="Nome" placeholder="Insira seu nome" size="lg" variant="custom" error={errors.name?.message} {...register("name")}></Input>
