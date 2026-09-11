@@ -71,7 +71,7 @@ html { overscroll-behavior: none; }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px color-mix(in srgb, var(--primary) 50%, white) inset;
+    -webkit-box-shadow: 0 0 0 1000px color-mix(in srgb, var(--secondary) 40%, white) inset;
     -webkit-text-fill-color: var(--foreground);
 }
 
