@@ -2,17 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cadastrar } from "@/services/auth.service";
-import { cadastroSchema, type CadastroFormData } from "@/schemas/cadastro.schema";
+import { cadastroSchema, type CadastroFormData } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
 
-interface CadastroFormProps {
-	onCadastroSucesso: () => void;
-}
-
-export function CadastroForm({ onCadastroSucesso }: Readonly<CadastroFormProps>){
+export function CadastroForm({ onCadastroSucesso }: Readonly<{ onCadastroSucesso: () => void }>) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [apiError, setApiError] = useState<string | null>(null);
 
@@ -33,7 +29,7 @@ export function CadastroForm({ onCadastroSucesso }: Readonly<CadastroFormProps>)
 			onCadastroSucesso();
 
 		} catch (error: unknown) {
-			(axios.isAxiosError<{ error?: string }>(error) && error.response?.data.error === "Email já cadastrado")
+			(axios.isAxiosError<{ message?: string }>(error) && error.response?.data.message === "Email já cadastrado")
 				? setError("email", { type: "server", message: "Email já cadastrado" })
 				: toast.error("Não foi possível criar a conta. Tente novamente.");
 

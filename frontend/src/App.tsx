@@ -14,6 +14,10 @@ type SessionResponse = { accessToken: string };
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [hasSessionError, setHasSessionError] = useState(false);
+	const handleLogin = (accessToken: string) => {
+		setAccessToken(accessToken);
+		setIsAuthenticated(true);
+	};
 
 	useEffect(() => {
 		let active = true;
@@ -44,7 +48,7 @@ function App() {
 		<BrowserRouter>
             <Routes>
                 <Route path="/" element={isAuthenticated ? <Home /> : <Landing />} />
-                <Route path="/entrar" element={isAuthenticated ? <Navigate to="/" replace /> : <Entrar />} />
+				<Route path="/entrar" element={isAuthenticated ? <Navigate to="/" replace /> : <Entrar onLogin={handleLogin} />} />
             </Routes>
 
 			<Toaster />

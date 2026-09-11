@@ -8,8 +8,9 @@ import { CadastroForm } from "./Cadastro/CadastroForm";
 import cadastroImg from "../../assets/cadastro.svg";
 import loginImg from "../../assets/login.svg";
 import { Button } from "@/components/ui/button";
+import type { AuthProps } from "@/interfaces/auth";
 
-export function Entrar() {
+export function Entrar({ onLogin }: AuthProps) {
     const location = useLocation();
     const [isLogin, setIsLogin] = useState<boolean>( location.state?.isLogin ?? true );
     function alternarFormulario() { setIsLogin((valorAtual) => !valorAtual); }
@@ -50,7 +51,7 @@ export function Entrar() {
                 </motion.div>
 
                 <motion.div layout className="form bg-primary h-full w-[50%] rounded-4xl p-6">
-					{isLogin ? <LoginForm /> : <CadastroForm onCadastroSucesso={alternarFormulario} />}
+					{isLogin ? <LoginForm onLogin={onLogin} /> : <CadastroForm onCadastroSucesso={alternarFormulario} />}
                 </motion.div>
             </motion.section>
         </main>
