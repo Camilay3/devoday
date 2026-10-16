@@ -19,3 +19,14 @@ export const createUserSchema = z.object({
 	email: z.email({ error: 'Email inválido' }).openapi({ example: 'joao@email.com' }),
 	password: z.string().min(8, 'Senha precisa ter no mínimo 8 caracteres').openapi({ example: 'senha123' }),
 }).openapi('CreateUsuarioInput');
+
+export const verifyUserParamSchema = z.object({
+	id: z.coerce.number().openapi({
+		param: { name: 'id', in: 'path', required: true },
+		example: 1,
+	}),
+	code: z.string().regex(/^\d{6}$/).openapi({
+		param: { name: 'code', in: 'path', required: true },
+		example: '123456',
+	}),
+}).openapi('VerificarUsuarioParams');

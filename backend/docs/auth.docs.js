@@ -1,5 +1,5 @@
 import { defaultResponseSchema, userResponseEnvelopeSchema } from '../validators/generic.validator.js';
-import { createUserSchema, loginUserSchema, tokenResponseSchema } from '../validators/auth.validator.js';
+import { createUserSchema, loginUserSchema, tokenResponseSchema, verifyUserParamSchema } from '../validators/auth.validator.js';
 import { registry } from './registry.js';
 
 registry.registerComponent('securitySchemes', 'bearerAuth', { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' });
@@ -75,6 +75,29 @@ registry.registerPath({
 				'application/json': {
 					schema: loginResponseEnvelopeSchema,
 					example: tokenResponseExample,
+				},
+			},
+		},
+	},
+});
+
+registry.registerPath({
+	method: 'post',
+	path: '/api/auth/verificar/{id}/{code}',
+	tags: ['Autenticação'],
+	summary: 'Verifica o email de um usuário',
+	request: { params: verifyUserParamSchema },
+	responses: {
+		200: {
+			description: 'Usuário verificado com sucesso',
+			content: {
+				'application/json': {
+					schema: defaultResponseSchema,
+					example: {
+						success: true,
+						message: 'Usuário verificado com sucesso',
+						data: null,
+					},
 				},
 			},
 		},

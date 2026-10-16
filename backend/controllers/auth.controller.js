@@ -3,6 +3,7 @@ import * as userService from '../services/user.service.js';
 import jwt from 'jsonwebtoken';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { generateAccessToken, generateRefreshToken } from '../utils/token.js';
+import { parseId } from '../utils/parseId.js';
 
 function getRefreshToken(req) {
 	return req.headers.cookie?.match(/(?:^|;\s*)refreshToken=([^;]*)/)?.[1];
@@ -12,6 +13,11 @@ export const register = asyncHandler(async (req, res) => {
 	const user = await authService.register(req.body);
 	res.status(201).json(user);
 });
+
+export const verify = asyncHandler(async (req, res) => {
+	await authService.verifyUser(parseId(req.params.id), req.params.code);
+	res.status(200).json({ message: 'Usuário verificado' });
+})
 
 export const login = asyncHandler(async (req, res) => {
 	const user = await authService.login(req.body);

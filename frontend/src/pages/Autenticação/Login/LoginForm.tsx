@@ -29,9 +29,9 @@ export function LoginForm({ onLogin }: AuthProps){
 			navigate('/');
 
 		} catch (error: unknown) {
-			(axios.isAxiosError<{ message?: string }>(error) && error.response?.data.message === "Email ou senha incorretos")
-				? toast.error("Não foi possível entrar na conta.", { description: "Email ou senha incorretos, verifique novamente." })
-				: toast.error("Não foi possível entrar na conta. Tente novamente.");
+			const description = axios.isAxiosError<{ message?: string }>(error) ? error.response?.data.message : undefined;
+
+			toast.error("Não foi possível entrar na conta. Tente novamente.", { description })
 
 		} finally { setIsLoading(false); }
 	}

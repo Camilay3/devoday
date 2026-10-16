@@ -25,13 +25,18 @@ export function CadastroForm({ onCadastroSucesso }: Readonly<{ onCadastroSucesso
 				email: data.email,
 				password: data.password,
 			});
-			toast.success("Cadastro realizado com sucesso!");
+			toast.success("Cadastro realizado com sucesso!", { description: "Verifique o código no seu email, se não tiver recebido, verifique o SPAM."});
+			// trocar por modal ?
 			onCadastroSucesso();
 
 		} catch (error: unknown) {
-			(axios.isAxiosError<{ message?: string }>(error) && error.response?.data.message === "Email já cadastrado")
-				? setError("email", { type: "server", message: "Email já cadastrado" })
-				: toast.error("Não foi possível criar a conta. Tente novamente.");
+			if (axios.isAxiosError<{ message?: string }>(error)) {
+				(error.response?.data.message === "Email já cadastrado")
+					? setError("email", { type: "server", message: "Email já cadastrado" })
+					: toast.error(error.response?.data.message ?? "Não foi possível criar a conta. Tente novamente.");
+			} else {
+				toast.error("Não foi possível criar a conta. Tente novamente.");
+			}
 
 		} finally { setIsLoading(false); }
 	}
