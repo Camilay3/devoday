@@ -7,6 +7,11 @@ export interface ILogin {
 	password: string,
 }
 
+export interface ILoginSuccess {
+	accessToken: string,
+	user: IUsuario,
+}
+
 export interface IUsuario {
 	id: number,
 	name: string,

@@ -8,7 +8,11 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
 
-export function CadastroForm({ onCadastroSucesso }: Readonly<{ onCadastroSucesso: () => void }>) {
+interface CadastroFormProps {
+	readonly onCadastroSucesso: (email: string) => Promise<boolean>;
+}
+
+export function CadastroForm({ onCadastroSucesso }: CadastroFormProps) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [apiError, setApiError] = useState<string | null>(null);
 
@@ -26,8 +30,7 @@ export function CadastroForm({ onCadastroSucesso }: Readonly<{ onCadastroSucesso
 				password: data.password,
 			});
 			toast.success("Cadastro realizado com sucesso!", { description: "Verifique o código no seu email, se não tiver recebido, verifique o SPAM."});
-			// trocar por modal ?
-			onCadastroSucesso();
+			await onCadastroSucesso(data.email);
 
 		} catch (error: unknown) {
 			if (axios.isAxiosError<{ message?: string }>(error)) {

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 
 import { LoginForm } from "./Login/LoginForm";
@@ -9,10 +9,25 @@ import cadastroImg from "../../assets/cadastro.svg";
 import loginImg from "../../assets/login.svg";
 import { Button } from "@/components/ui/button";
 import type { AuthProps } from "@/interfaces/auth";
+import { ModalConfirmarCodigo } from "./Modais/ModalConfirmarCodigo";
 
 export function Entrar({ onLogin }: AuthProps) {
     const location = useLocation();
     const [isLogin, setIsLogin] = useState<boolean>( location.state?.isLogin ?? true );
+	const [emailParaConfirmar, setEmailParaConfirmar] = useState("");
+    const resolverVerificacao = useRef<((verificado: boolean) => void) | null>(null);
+
+    function solicitarVerificacao(email: string): Promise<boolean> {
+    	return new Promise((resolve) => {
+    		resolverVerificacao.current = resolve;
+    		setEmailParaConfirmar(email);
+    	});
+    }
+
+    function concluirVerificacao(verificado: boolean) {
+    	resolverVerificacao.current?.(verificado);
+    	resolverVerificacao.current = null;
+    }
     function alternarFormulario() { setIsLogin((valorAtual) => !valorAtual); }
 
 	const [isLoginDelayed, setIsLoginDelayed] = useState(isLogin);
@@ -51,9 +66,30 @@ export function Entrar({ onLogin }: AuthProps) {
                 </motion.div>
 
                 <motion.div layout className="form bg-primary h-full w-[50%] rounded-4xl p-6">
-					{isLogin ? <LoginForm onLogin={onLogin} /> : <CadastroForm onCadastroSucesso={alternarFormulario} />}
+					{isLogin
+						? <LoginForm onLogin={onLogin} onEmailNaoVerificado={solicitarVerificacao} />
+						: <CadastroForm
+							onCadastroSucesso={async (email) => {
+								const verificado = await solicitarVerificacao(email);
+								if (verificado) alternarFormulario();
+								return verificado;
+							}}
+						/>
+					}
                 </motion.div>
             </motion.section>
+
+			<ModalConfirmarCodigo
+				email={emailParaConfirmar}
+				open={Boolean(emailParaConfirmar)}
+				onVerified={() => concluirVerificacao(true)}
+				onOpenChange={(open) => {
+					if (!open) {
+						setEmailParaConfirmar("");
+						concluirVerificacao(false);
+					}
+				}}
+			/>
         </main>
     );
 }

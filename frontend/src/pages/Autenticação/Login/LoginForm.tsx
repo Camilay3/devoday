@@ -10,7 +10,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-export function LoginForm({ onLogin }: AuthProps){
+interface LoginFormProps extends AuthProps {
+	readonly onEmailNaoVerificado: (email: string) => Promise<boolean>;
+}
+
+export function LoginForm({ onLogin, onEmailNaoVerificado }: LoginFormProps){
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 
@@ -18,7 +22,7 @@ export function LoginForm({ onLogin }: AuthProps){
 		resolver: zodResolver(loginSchema),
 	});
 
-	async function onSubmit(data: LoginFormData) {
+	async function onSubmit(data: LoginFormData, tentativa = 1) {
 		setIsLoading(true);
 		try {
 			const response = await entrar({
@@ -33,11 +37,20 @@ export function LoginForm({ onLogin }: AuthProps){
 
 			toast.error("Não foi possível entrar na conta. Tente novamente.", { description })
 
+			if (description === "Email não verificado" && tentativa <= 2) {
+				const emailVerificado = await onEmailNaoVerificado(data.email);
+				if (emailVerificado) return onSubmit(data, tentativa+1);
+			}
+
 		} finally { setIsLoading(false); }
 	}
 
+	function handleFormSubmit(data: LoginFormData) {
+		return onSubmit(data);
+	}
+
 	return (
-		<form className="flex flex-col justify-between bg-white rounded-2xl h-full p-6 shadow-uniforme" onSubmit={handleSubmit(onSubmit)}>
+		<form className="flex flex-col justify-between bg-white rounded-2xl h-full p-6 shadow-uniforme" onSubmit={handleSubmit(handleFormSubmit)}>
 			<h1 className="text-4xl font-bold text-center">Boas vindas novamente!</h1>
 
 			<div className="inputs">

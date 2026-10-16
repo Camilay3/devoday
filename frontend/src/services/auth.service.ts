@@ -1,4 +1,4 @@
-import type { ICadastro, ILogin } from "@/interfaces/auth";
+import type { ICadastro, ILogin, ILoginSuccess } from "@/interfaces/auth";
 import type { IUsuario } from "@/interfaces/auth";
 import type { IResponse } from "@/interfaces/defaultResponse";
 import type { AxiosResponse } from "axios";
@@ -14,11 +14,15 @@ export async function cadastrar(data: ICadastro): Promise<AxiosResponse<IRespons
     return response;
 }
 
-export async function entrar(data: ILogin): Promise<AxiosResponse<IResponse<any>>> {
-	const response = await api.post<IResponse<any>>("/auth/login", {
+export async function entrar(data: ILogin): Promise<AxiosResponse<IResponse<ILoginSuccess>>> {
+	const response = await api.post<IResponse<ILoginSuccess>>("/auth/login", {
 		email: data.email,
 		password: data.password,
 	})
 
 	return response;
+}
+
+export async function confirmarEmail(email: string, code: number): Promise<AxiosResponse<IResponse<null>>> {
+	return await api.post<IResponse<null>>(`/auth/verificar/${email}/${code}`)
 }
