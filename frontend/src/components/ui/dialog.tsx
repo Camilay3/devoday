@@ -61,7 +61,7 @@ function DialogContent({
 						data-slot="dialog-close"
 						render={
 							<Button
-								variant="ghost"
+								variant="linkFill"
 								className="absolute top-4 right-4"
 								size="icon-sm"
 							/>
@@ -117,7 +117,7 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
 	return (
 		<DialogPrimitive.Title
 			data-slot="dialog-title"
-			className={cn("font-heading leading-none font-medium", className)}
+			className={cn("font-heading text-2xl leading-tight font-bold text-foreground", className)}
 			{...props}
 		/>
 	);
@@ -125,13 +125,17 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
 
 function DialogDescription({
 	className,
+	align = "left",
 	...props
-}: DialogPrimitive.Description.Props) {
+}: DialogPrimitive.Description.Props & {
+	align?: "left" | "center";
+}) {
 	return (
 		<DialogPrimitive.Description
 			data-slot="dialog-description"
 			className={cn(
-				"text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
+				"font-heading text-lg leading-relaxed text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
+				align === "center" ? "text-center" : "text-left",
 				className,
 			)}
 			{...props}

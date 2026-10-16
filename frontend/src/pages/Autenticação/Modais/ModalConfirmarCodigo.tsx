@@ -48,8 +48,8 @@ export function ModalConfirmarCodigo({ email, open, onVerified, onOpenChange }: 
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Digite o código de verificação</DialogTitle>
-					<DialogDescription>Confira o código enviado para o email: {cutMail}.</DialogDescription>
+					<DialogTitle>Verificar email</DialogTitle>
+					<DialogDescription align="center">Informe o código enviado para o email: <b>{cutMail}</b>.</DialogDescription>
 				</DialogHeader>
 
 				<Input
@@ -67,7 +67,7 @@ export function ModalConfirmarCodigo({ email, open, onVerified, onOpenChange }: 
 				/>
 
 				<DialogFooter>
-					<Button variant="outline" onClick={() => onOpenChange(false)}>
+					<Button variant="secondary" onClick={() => onOpenChange(false)}>
 						Cancelar
 					</Button>
 					<Button variant="fill" onClick={handleSubmit(handleSalvar)} disabled={isLoading} >
