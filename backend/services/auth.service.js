@@ -30,14 +30,14 @@ export async function register(data) {
     return user;
 }
 
-export async function verifyUser(id, code) {
-	const user = await getUser(id);
+export async function verifyUser(email, code) {
+	const user = await authRepository.findByEmail(email);
 
 	if (user.emailVerified) throw new AppError('Usuário já verificado', 409);
 	if (code !== user.verificationCode) throw new AppError('Código incorreto', 400);
 	if (!user.verificationCodeExpiresAt || user.verificationCodeExpiresAt < new Date()) throw new AppError('Código expirado', 400);
 
-	return authRepository.verifyUser(id);
+	return authRepository.verifyUser(email);
 }
 
 export async function login(data) {

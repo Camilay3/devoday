@@ -15,7 +15,7 @@ export const register = asyncHandler(async (req, res) => {
 });
 
 export const verify = asyncHandler(async (req, res) => {
-	await authService.verifyUser(parseId(req.params.id), req.params.code);
+	await authService.verifyUser(req.params.email, req.params.code);
 	res.status(200).json({ message: 'Usuário verificado' });
 })
 

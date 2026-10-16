@@ -21,9 +21,9 @@ export const createUserSchema = z.object({
 }).openapi('CreateUsuarioInput');
 
 export const verifyUserParamSchema = z.object({
-	id: z.coerce.number().openapi({
-		param: { name: 'id', in: 'path', required: true },
-		example: 1,
+	email: z.email().openapi({
+		param: { name: 'email', in: 'path', required: true },
+		example: "email@gmail.com",
 	}),
 	code: z.string().regex(/^\d{6}$/).openapi({
 		param: { name: 'code', in: 'path', required: true },

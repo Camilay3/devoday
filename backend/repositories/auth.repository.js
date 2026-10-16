@@ -8,9 +8,9 @@ export function create(data) {
 	return prisma.user.create({ data, omit: { password: true }, });
 }
 
-export function verifyUser(id) {
+export function verifyUser(email) {
 	return prisma.user.update({
-		where: { id },
+		where: { email },
 		data: { 
 			emailVerified: true,
 			verificationCode: null,

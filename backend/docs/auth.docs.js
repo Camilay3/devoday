@@ -83,7 +83,7 @@ registry.registerPath({
 
 registry.registerPath({
 	method: 'post',
-	path: '/api/auth/verificar/{id}/{code}',
+	path: '/api/auth/verificar/{email}/{code}',
 	tags: ['Autenticação'],
 	summary: 'Verifica o email de um usuário',
 	request: { params: verifyUserParamSchema },
