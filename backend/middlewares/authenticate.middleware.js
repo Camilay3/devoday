@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { AppError } from '../utils/app.error.js';
 
 export function authenticate(req, res, next) {
 	const token = req.headers.authorization?.match(/^Bearer\s+(.+)$/i)?.[1];
@@ -15,4 +16,12 @@ export function authenticate(req, res, next) {
 	} catch {
 		return res.status(401).json({ error: 'Token inválido ou expirado' });
 	}
+}
+
+export function authorizeSelf(req, _res, next) {
+	const requestedId = Number(req.params.id);
+	if (!Number.isInteger(requestedId) || requestedId !== req.userId) {
+		return next(new AppError('Você só pode acessar a própria conta', 403));
+	}
+	next();
 }

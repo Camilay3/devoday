@@ -3,7 +3,6 @@ import { randomInt } from 'node:crypto';
 import * as authRepository from '../repositories/auth.repository.js';
 import { AppError } from '../utils/app.error.js';
 import { sendVerificationEmail } from '../services/email.service.js';
-import { getUser } from './user.service.js';
 
 export async function register(data) {
 	const existing = await authRepository.findByEmail(data.email);
@@ -33,6 +32,7 @@ export async function register(data) {
 export async function verifyUser(email, code) {
 	const user = await authRepository.findByEmail(email);
 
+	if (!user) throw new AppError('Código inválido', 400);
 	if (user.emailVerified) throw new AppError('Usuário já verificado', 409);
 	if (code !== user.verificationCode) throw new AppError('Código incorreto', 400);
 	if (!user.verificationCodeExpiresAt || user.verificationCodeExpiresAt < new Date()) throw new AppError('Código expirado', 400);
