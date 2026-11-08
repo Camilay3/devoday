@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import routes from './routes/index.js';
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 import { responseMiddleware } from './middlewares/response.middleware.js';
+import { ipKey, rateLimit } from './middlewares/rate-limit.middleware.js';
 
 const app = express();
 app.get('/health', (_req, res) => res.sendStatus(200));
@@ -17,6 +18,11 @@ app.use(cors({
 	credentials: true,
 }));
 app.use('/api', responseMiddleware);
+app.use('/api', rateLimit({
+	windowMs: 60 * 1000,
+	max: 120,
+	keyGenerators: [ipKey],
+}));
 app.use('/api', routes);
 app.use(errorMiddleware);
 
